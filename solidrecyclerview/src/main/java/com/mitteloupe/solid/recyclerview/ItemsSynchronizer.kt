@@ -1,6 +1,5 @@
 package com.mitteloupe.solid.recyclerview
 
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
 interface ItemsSynchronizer<VIEW_HOLDER : ViewHolder, ITEM> {

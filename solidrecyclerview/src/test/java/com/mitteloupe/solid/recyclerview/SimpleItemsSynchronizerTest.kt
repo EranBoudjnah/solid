@@ -147,7 +147,6 @@ class SimpleItemsSynchronizerTest {
         verify(adapter).notifyItemRangeInserted(position, expectedInserted)
     }
 
-
     @Test(expected = IndexOutOfBoundsException::class)
     fun `Given no items and positive index when insertItems then throws IndexOutOfBoundsException`() {
         // Given

@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mitteloupe.solid.recyclerview.data.TestData
 import com.mitteloupe.solid.recyclerview.data.TestViewHolder
-import com.nhaarman.mockitokotlin2.UseConstructor
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.given
 import com.nhaarman.mockitokotlin2.mock
@@ -16,7 +15,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
 private const val ITEM_TYPE_DEFAULT = 0
@@ -27,6 +25,9 @@ class SolidAdapterTest {
 
     @Mock
     lateinit var viewProvider: ViewProvider
+
+    @Mock
+    lateinit var viewHolderProvider: (View) -> TestViewHolder
 
     @Mock
     lateinit var viewBinder: ViewBinder<TestViewHolder, TestData>
@@ -42,14 +43,12 @@ class SolidAdapterTest {
 
     @Before
     fun setUp() {
-        cut = mock(
-            defaultAnswer = Mockito.CALLS_REAL_METHODS,
-            useConstructor = UseConstructor.withArguments(
-                viewProvider,
-                viewBinder,
-                itemsSynchronizerProvider,
-                positionToType
-            )
+        cut = SolidAdapter(
+            viewProvider,
+            viewHolderProvider,
+            viewBinder,
+            itemsSynchronizerProvider,
+            positionToType
         )
 
         doReturn(itemsSynchronizer).whenever(itemsSynchronizerProvider)(cut)
@@ -239,7 +238,7 @@ class SolidAdapterTest {
         val view = mock<View>()
         given { viewProvider.getView(parent, viewType) }.willReturn(view)
         val expected = mock<TestViewHolder>()
-        given { cut.createViewHolder(view) }.willReturn(expected)
+        doReturn(expected).whenever(viewHolderProvider)(view)
 
         // When
         val actualValue = cut.onCreateViewHolder(parent, viewType)
@@ -290,13 +289,11 @@ class SolidAdapterTest {
     @Test
     fun `Given default itemsSynchronization when itemCount then returns 0`() {
         // Given
-        val cutWithDefaultItemsSynchronization = mock<SolidAdapter<TestViewHolder, TestData>>(
-            defaultAnswer = Mockito.CALLS_REAL_METHODS,
-            useConstructor = UseConstructor.withArguments(
-                viewProvider,
-                viewBinder,
-                positionToType
-            )
+        val cutWithDefaultItemsSynchronization = SolidAdapter(
+            viewProvider,
+            viewHolderProvider,
+            viewBinder,
+            positionToType
         )
         val expected = 0
 
@@ -310,13 +307,7 @@ class SolidAdapterTest {
     @Test
     fun `Given no optional arguments when itemCount then returns 0`() {
         // Given
-        val cutWithNoOptionals = mock<SolidAdapter<TestViewHolder, TestData>>(
-            defaultAnswer = Mockito.CALLS_REAL_METHODS,
-            useConstructor = UseConstructor.withArguments(
-                viewProvider,
-                viewBinder
-            )
-        )
+        val cutWithNoOptionals = SolidAdapter(viewProvider, viewHolderProvider, viewBinder)
         val expected = 0
 
         // When
@@ -329,13 +320,11 @@ class SolidAdapterTest {
     @Test
     fun `Given default positionToType when getItemViewType then returns default type`() {
         // Given
-        val cutWithDefaultPositionToType = mock<SolidAdapter<TestViewHolder, TestData>>(
-            defaultAnswer = Mockito.CALLS_REAL_METHODS,
-            useConstructor = UseConstructor.withArguments(
-                viewProvider,
-                viewBinder,
-                itemsSynchronizerProvider
-            )
+        val cutWithDefaultPositionToType = SolidAdapter(
+            viewProvider,
+            viewHolderProvider,
+            viewBinder,
+            itemsSynchronizerProvider
         )
         doReturn(itemsSynchronizer).whenever(itemsSynchronizerProvider)(cutWithDefaultPositionToType)
 
@@ -348,5 +337,4 @@ class SolidAdapterTest {
         // Then
         assertEquals(expected, actualValue)
     }
-
 }

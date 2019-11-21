@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 
 private const val ITEM_TYPE_DEFAULT = 0
 
-abstract class SolidAdapter<VIEW_HOLDER : RecyclerView.ViewHolder, ITEM>
+open class SolidAdapter<VIEW_HOLDER : RecyclerView.ViewHolder, ITEM>
 @JvmOverloads constructor(
     private val viewProvider: ViewProvider,
+    private val viewHolderProvider: (View) -> VIEW_HOLDER,
     private val viewBinder: ViewBinder<VIEW_HOLDER, ITEM>,
     private val itemsSynchronizerProvider: (RecyclerView.Adapter<VIEW_HOLDER>) -> ItemsSynchronizer<VIEW_HOLDER, ITEM> =
         { itemsSynchronizer -> SimpleItemsSynchronizer(itemsSynchronizer) },
@@ -17,11 +18,13 @@ abstract class SolidAdapter<VIEW_HOLDER : RecyclerView.ViewHolder, ITEM>
 ) : RecyclerView.Adapter<VIEW_HOLDER>() {
     constructor(
         viewProvider: ViewProvider,
+        viewHolderProvider: (View) -> VIEW_HOLDER,
         viewBinder: ViewBinder<VIEW_HOLDER, ITEM>,
         positionToType: (ItemsSynchronizer<VIEW_HOLDER, ITEM>, Int) -> Int
     ) : this(
         viewProvider = viewProvider,
         viewBinder = viewBinder,
+        viewHolderProvider = viewHolderProvider,
         itemsSynchronizerProvider = { itemsSynchronizer -> SimpleItemsSynchronizer(itemsSynchronizer) },
         positionToType = positionToType
     )
@@ -77,10 +80,8 @@ abstract class SolidAdapter<VIEW_HOLDER : RecyclerView.ViewHolder, ITEM>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VIEW_HOLDER {
         val view = viewProvider.getView(parent, viewType)
-        return createViewHolder(view)
+        return viewHolderProvider(view)
     }
-
-    abstract fun createViewHolder(view: View): VIEW_HOLDER
 
     override fun getItemCount() = itemsSynchronizer.itemsSize
 

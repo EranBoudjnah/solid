@@ -23,7 +23,7 @@ class MoodViewHolder(
     override val containerView: View
 ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
     val iconView: ImageView = layoutIconView
-    val indexView: TextView = layoutTitleView
+    val titleView: TextView = layoutTitleView
 }
 
 class MoodViewBinder(
@@ -33,6 +33,6 @@ class MoodViewBinder(
         viewHolder.iconView.setImageDrawable(
             AppCompatResources.getDrawable(context, data.iconResourceId)
         )
-        viewHolder.indexView.text = data.title
+        viewHolder.titleView.text = data.title
     }
 }

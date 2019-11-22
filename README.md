@@ -1,6 +1,6 @@
 # SOLID Components
 
-SOLID Compontents are an attempt at following good engineering standards and best practices such as [SOLID](https://en.wikipedia.org/wiki/SOLID) and [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) where Google neglected to.
+SOLID Components are an attempt at following good engineering standards and best practices such as [SOLID](https://en.wikipedia.org/wiki/SOLID) and [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) where Google neglected to.
 
 ## Installation
 

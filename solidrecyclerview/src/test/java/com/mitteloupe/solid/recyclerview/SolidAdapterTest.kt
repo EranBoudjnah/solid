@@ -2,7 +2,7 @@ package com.mitteloupe.solid.recyclerview
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.mitteloupe.solid.recyclerview.data.TestData
 import com.mitteloupe.solid.recyclerview.data.TestViewHolder
 import com.nhaarman.mockitokotlin2.doReturn
@@ -27,7 +27,7 @@ class SolidAdapterTest {
     lateinit var viewProvider: ViewProvider
 
     @Mock
-    lateinit var viewHolderProvider: (View) -> TestViewHolder
+    lateinit var viewHolderProvider: (View, Int) -> TestViewHolder
 
     @Mock
     lateinit var viewBinder: ViewBinder<TestViewHolder, TestData>
@@ -36,7 +36,7 @@ class SolidAdapterTest {
     lateinit var itemsSynchronizer: ItemsSynchronizer<TestViewHolder, TestData>
 
     @Mock
-    lateinit var itemsSynchronizerProvider: (RecyclerView.Adapter<TestViewHolder>) -> ItemsSynchronizer<TestViewHolder, TestData>
+    lateinit var itemsSynchronizerProvider: (Adapter<TestViewHolder>) -> ItemsSynchronizer<TestViewHolder, TestData>
 
     @Mock
     lateinit var positionToType: (ItemsSynchronizer<TestViewHolder, TestData>, Int) -> Int
@@ -238,7 +238,7 @@ class SolidAdapterTest {
         val view = mock<View>()
         given { viewProvider.getView(parent, viewType) }.willReturn(view)
         val expected = mock<TestViewHolder>()
-        doReturn(expected).whenever(viewHolderProvider)(view)
+        doReturn(expected).whenever(viewHolderProvider)(view, viewType)
 
         // When
         val actualValue = cut.onCreateViewHolder(parent, viewType)

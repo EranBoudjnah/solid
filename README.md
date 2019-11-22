@@ -1,5 +1,7 @@
 # SOLID Components
 
+[![Build Status](https://travis-ci.com/EranBoudjnah/Solid.svg?branch=master)](https://travis-ci.com/EranBoudjnah/Solid)
+
 SOLID Components are an attempt at following good engineering standards and best practices such as [SOLID](https://en.wikipedia.org/wiki/SOLID) and [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) where Google neglected to.
 
 ## Installation

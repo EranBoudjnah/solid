@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         solidAdapter = SolidAdapter(
             MoodViewProvider(layoutInflater),
-            { view -> MoodViewHolder(view) },
+            { view, _ -> MoodViewHolder(view) },
             MoodViewBinder(this)
         )
         recyclerView.adapter = solidAdapter

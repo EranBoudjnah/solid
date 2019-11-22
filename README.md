@@ -46,6 +46,95 @@ Instead of setting a `RecyclerView.Adapter` to your RecyclerView, simply set a `
 
 5. positionToType - this is a lambda that, given an `ItemsSynchronizer` instance and a position, returns the view type for that position. By default, it always returns `ITEM_TYPE_DEFAULT`.
 
+## Comparison
+
+Let's take a look at a simple, common RecyclerView.Adapter implementation:
+
+Without SolidAdapter:
+
+```kotlin
+class MoodViewHolder(
+    override val containerView: View
+) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    val iconView: ImageView = layoutIconView
+    val titleView: TextView = layoutTitleView
+
+    override fun bindData(moodItem: MoodUiModel) {
+        iconView.setImageDrawable(
+            AppCompatResources.getDrawable(context, data.iconResourceId)
+        )
+        indexView.text = data.title
+    }
+}
+
+class ListItemsAdapter(
+    private val layoutInflater: LayoutInflater
+) : RecyclerView.Adapter<MoodViewHolder>() {
+    private val listData = mutableListOf<MoodUiModel>()
+
+    fun setData(listData: List<MoodUiModel>) {
+        this.listData.clear()
+        this.listData.addAll(listData)
+        notifyDataSetChanged()
+    }
+
+    fun removeItem(position: Int) {
+        listData.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun addItem(position: Int, item: ListItemUiModel) {
+        listData.add(position, item)
+        notifyItemInserted(position)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoodViewHolder {
+        val view = layoutInflater.inflate(R.layout.item_mood, parent, false)
+        return MoodViewHolder(view)
+    }
+
+    override fun getItemCount() = listData.size
+
+    override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
+        holder.bindData(listData[position])
+    }
+}
+
+val adapter = ListItemsAdapter(layoutInflater)
+```
+
+With SolidAdapter:
+
+```kotlin
+class MoodViewProvider(
+    layoutInflater: LayoutInflater
+) : InflatedViewProvider(layoutInflater, R.layout.item_mood)
+
+class MoodViewHolder(
+    override val containerView: View
+) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    val iconView: ImageView = layoutIconView
+    val titleView: TextView = layoutTitleView
+}
+
+class MoodViewBinder(
+    private val context: Context
+) : SimpleViewBinder<MoodViewHolder, MoodUiModel>() {
+    override fun bindView(viewHolder: MoodViewHolder, data: MoodUiModel) {
+        viewHolder.iconView.setImageDrawable(
+            AppCompatResources.getDrawable(context, data.iconResourceId)
+        )
+        viewHolder.indexView.text = data.title
+    }
+}
+
+val adapter = SolidAdapter(
+    MoodViewProvider(layoutInflater),
+    { view -> MoodViewHolder(view) },
+    MoodViewBinder(this)
+)
+```
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 

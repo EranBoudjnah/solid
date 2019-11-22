@@ -1,8 +1,13 @@
 # SOLID Components
 
-[![Build Status](https://travis-ci.com/EranBoudjnah/Solid.svg?branch=master)](https://travis-ci.com/EranBoudjnah/Solid)
+[![Build Status](https://img.shields.io/travis/EranBoudjnah/Solid)](https://travis-ci.com/EranBoudjnah/Solid)
+[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/com.mittelouple.solidcomponents)](https://bintray.com/shadowcra/Solid/com.mittelouple.solidcomponents)
+[![License](https://img.shields.io/github/license/EranBoudjnah/Solid)](http://cocoapods.org/pods/MTCircularSlider)
+[![Platform](https://img.shields.io/badge/platform-android-lightgrey)](https://developer.android.com/reference)
 
 SOLID Components are an attempt at following good engineering standards and best practices such as [SOLID](https://en.wikipedia.org/wiki/SOLID) and [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) where Google neglected to.
+
+![Icon](https://github.com/EranBoudjnah/solid/raw/master/assets/RockSolid.png)
 
 ## Installation
 

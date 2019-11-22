@@ -36,4 +36,3 @@ class MoodViewBinder(
         viewHolder.indexView.text = data.title
     }
 }
-

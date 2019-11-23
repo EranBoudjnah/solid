@@ -130,7 +130,7 @@ class MoodViewBinder(
 
 val adapter = SolidAdapter(
     MoodViewProvider(layoutInflater),
-    { view -> MoodViewHolder(view) },
+    { view, _ -> MoodViewHolder(view) },
     MoodViewBinder(this)
 )
 ```

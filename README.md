@@ -25,7 +25,7 @@ And then the implementation.
 
 ```groovy
 dependencies {
-    implementation "com.mitteloupe.solid:solidrecyclerview:1.0.0"
+    implementation "com.mitteloupe.solid:solidrecyclerview:1.0.2"
 }
 ```
 

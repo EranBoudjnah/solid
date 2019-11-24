@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
  * [viewTypeToLayoutResourceId] can be provided to map view types to resource IDs.
  * Otherwise, a single layout resource ID can be provided using the convenience constructor
  * InflatedViewProvider(LayoutInflater, Int).
+ *
+ * @see ViewProvider
  */
 open class InflatedViewProvider(
     private val layoutInflater: LayoutInflater,

@@ -33,13 +33,13 @@ class SolidAdapterTest {
     lateinit var viewBinder: ViewBinder<TestViewHolder, TestData>
 
     @Mock
-    lateinit var itemsSynchronizer: ItemsSynchronizer<TestViewHolder, TestData>
+    lateinit var itemsSynchronizer: ItemsSynchronizer<TestData>
 
     @Mock
-    lateinit var itemsSynchronizerProvider: (Adapter<TestViewHolder>) -> ItemsSynchronizer<TestViewHolder, TestData>
+    lateinit var itemsSynchronizerProvider: (Adapter<TestViewHolder>) -> ItemsSynchronizer<TestData>
 
     @Mock
-    lateinit var positionToType: (ItemsSynchronizer<TestViewHolder, TestData>, Int) -> Int
+    lateinit var positionToType: (ItemsSynchronizer<TestData>, Int) -> Int
 
     @Before
     fun setUp() {

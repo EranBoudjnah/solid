@@ -3,6 +3,10 @@ package com.mitteloupe.solid.recyclerview
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
+/**
+ * A simple implementation of [ItemsSynchronizer] which maintains a [List] of [ITEM]s, notifying
+ * the adapter when data changes.
+ */
 class SimpleItemsSynchronizer<VIEW_HOLDER : ViewHolder, ITEM>(
     private val adapter: Adapter<VIEW_HOLDER>
 ) : ItemsSynchronizer<ITEM> {
@@ -16,8 +20,8 @@ class SimpleItemsSynchronizer<VIEW_HOLDER : ViewHolder, ITEM>(
     override fun setItems(items: List<ITEM>) {
         val oldItemsSize = itemsSize
         this.items.clear()
-        this.items.addAll(items)
         adapter.notifyItemRangeRemoved(0, oldItemsSize)
+        this.items.addAll(items)
         adapter.notifyItemRangeInserted(0, itemsSize)
     }
 

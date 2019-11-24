@@ -12,7 +12,7 @@ import com.mitteloupe.solidcomponents.model.MoodUiModel
 import kotlinx.android.synthetic.main.activity_main.recycler_view as recyclerView
 
 class MainActivity : AppCompatActivity() {
-    lateinit var solidAdapter: SolidAdapter<MoodViewHolder, MoodUiModel>
+    private lateinit var solidAdapter: SolidAdapter<MoodViewHolder, MoodUiModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

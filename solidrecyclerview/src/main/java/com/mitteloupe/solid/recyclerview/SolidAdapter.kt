@@ -43,9 +43,9 @@ open class SolidAdapter<VIEW_HOLDER : ViewHolder, ITEM>
     private val viewProvider: ViewProvider,
     private val viewHoldersProvider: (View, Int) -> VIEW_HOLDER,
     private val viewBinder: ViewBinder<VIEW_HOLDER, ITEM>,
-    private val itemsSynchronizerProvider: (Adapter<VIEW_HOLDER>) -> ItemsSynchronizer<VIEW_HOLDER, ITEM> =
+    private val itemsSynchronizerProvider: (Adapter<VIEW_HOLDER>) -> ItemsSynchronizer<ITEM> =
         { itemsSynchronizer -> SimpleItemsSynchronizer(itemsSynchronizer) },
-    private val positionToType: (ItemsSynchronizer<VIEW_HOLDER, ITEM>, Int) -> Int =
+    private val positionToType: (ItemsSynchronizer<ITEM>, Int) -> Int =
         { _, _ -> ITEM_TYPE_DEFAULT }
 ) : Adapter<VIEW_HOLDER>() {
     /**
@@ -56,7 +56,7 @@ open class SolidAdapter<VIEW_HOLDER : ViewHolder, ITEM>
         viewProvider: ViewProvider,
         viewHoldersProvider: (View, Int) -> VIEW_HOLDER,
         viewBinder: ViewBinder<VIEW_HOLDER, ITEM>,
-        positionToType: (ItemsSynchronizer<VIEW_HOLDER, ITEM>, Int) -> Int
+        positionToType: (ItemsSynchronizer<ITEM>, Int) -> Int
     ) : this(
         viewProvider = viewProvider,
         viewBinder = viewBinder,

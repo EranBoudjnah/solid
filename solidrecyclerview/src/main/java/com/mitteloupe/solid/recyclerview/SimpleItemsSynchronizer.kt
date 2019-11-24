@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
 class SimpleItemsSynchronizer<VIEW_HOLDER : ViewHolder, ITEM>(
     private val adapter: Adapter<VIEW_HOLDER>
-) : ItemsSynchronizer<VIEW_HOLDER, ITEM> {
+) : ItemsSynchronizer<ITEM> {
     private val items: MutableList<ITEM> = mutableListOf()
 
     override val itemsSize: Int

@@ -32,11 +32,11 @@ private const val ITEM_TYPE_DEFAULT = 0
  * @see ViewHolder
  * @see ViewProvider
  *
- * @param viewProvider              See [ViewProvider]
- * @param viewHoldersProvider       See above
- * @param viewBinder                See [ViewBinder]
+ * @param viewProvider See [ViewProvider]
+ * @param viewHoldersProvider See above
+ * @param viewBinder See [ViewBinder]
  * @param itemsSynchronizerProvider See above and [ItemsSynchronizer]
- * @param positionToType            See above
+ * @param positionToType See above
  */
 open class SolidAdapter<VIEW_HOLDER : ViewHolder, ITEM>
 @JvmOverloads constructor(

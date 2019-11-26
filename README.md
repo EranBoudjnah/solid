@@ -25,12 +25,21 @@ And then the implementation.
 
 ```groovy
 dependencies {
+    implementation "com.mitteloupe.solid:solidactivity:1.0.2"
     implementation "com.mitteloupe.solid:solidrecyclerview:1.0.2"
 }
 ```
 
 
 ## Usage
+
+### Activity
+
+You can use `SolidActivity` as the parent activity of any activity in your app. Instead of having a BaseActivity, you can now provide common activity code by overriding one or more of the handler lists, providing a list of handlers.
+
+See the provided sample project for a concrete example.
+
+### Adapter
 
 Instead of setting a `RecyclerView.Adapter` to your RecyclerView, simply set a `SolidAdapter`.
 
@@ -46,7 +55,7 @@ Instead of setting a `RecyclerView.Adapter` to your RecyclerView, simply set a `
 
 5. positionToType - this is a lambda that, given an `ItemsSynchronizer` instance and a position, returns the view type for that position. By default, it always returns `ITEM_TYPE_DEFAULT`.
 
-## Comparison
+#### Comparison
 
 Let's take a look at a simple, common RecyclerView.Adapter implementation:
 

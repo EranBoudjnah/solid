@@ -1,4 +1,4 @@
-package com.mitteloupe.solid.solidactivity.handler
+package com.mitteloupe.solid.activity.handler
 
 import android.app.Activity
 import android.app.TaskStackBuilder

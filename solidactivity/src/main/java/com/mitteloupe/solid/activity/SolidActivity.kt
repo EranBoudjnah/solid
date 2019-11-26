@@ -1,4 +1,4 @@
-package com.mitteloupe.solid.solidactivity
+package com.mitteloupe.solid.activity
 
 import android.app.Activity
 import android.app.TaskStackBuilder
@@ -22,29 +22,29 @@ import android.view.SearchEvent
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.mitteloupe.solid.solidactivity.handler.ActionModeHandler
-import com.mitteloupe.solid.solidactivity.handler.ActivityForResultCallbackHandler
-import com.mitteloupe.solid.solidactivity.handler.AnimationHandler
-import com.mitteloupe.solid.solidactivity.handler.ContextMenuHandler
-import com.mitteloupe.solid.solidactivity.handler.GenericMotionHandler
-import com.mitteloupe.solid.solidactivity.handler.InstanceStateHandler
-import com.mitteloupe.solid.solidactivity.handler.KeyHandler
-import com.mitteloupe.solid.solidactivity.handler.LifecycleHandler
-import com.mitteloupe.solid.solidactivity.handler.LocalVoiceInteractionHandler
-import com.mitteloupe.solid.solidactivity.handler.MemoryHandler
-import com.mitteloupe.solid.solidactivity.handler.MenuOpenedHandler
-import com.mitteloupe.solid.solidactivity.handler.MetaDataHandler
-import com.mitteloupe.solid.solidactivity.handler.NavigationHandler
-import com.mitteloupe.solid.solidactivity.handler.NewIntentHandler
-import com.mitteloupe.solid.solidactivity.handler.OptionsMenuHandler
-import com.mitteloupe.solid.solidactivity.handler.PermissionHandler
-import com.mitteloupe.solid.solidactivity.handler.SearchHandler
-import com.mitteloupe.solid.solidactivity.handler.TitleHandler
-import com.mitteloupe.solid.solidactivity.handler.TouchHandler
-import com.mitteloupe.solid.solidactivity.handler.ViewCreationHandler
-import com.mitteloupe.solid.solidactivity.handler.WindowAttachmentHandler
-import com.mitteloupe.solid.solidactivity.handler.WindowFocusHandler
-import com.mitteloupe.solid.solidactivity.handler.WindowModeHandler
+import com.mitteloupe.solid.activity.handler.ActionModeHandler
+import com.mitteloupe.solid.activity.handler.ActivityForResultCallbackHandler
+import com.mitteloupe.solid.activity.handler.AnimationHandler
+import com.mitteloupe.solid.activity.handler.ContextMenuHandler
+import com.mitteloupe.solid.activity.handler.GenericMotionHandler
+import com.mitteloupe.solid.activity.handler.InstanceStateHandler
+import com.mitteloupe.solid.activity.handler.KeyHandler
+import com.mitteloupe.solid.activity.handler.LifecycleHandler
+import com.mitteloupe.solid.activity.handler.LocalVoiceInteractionHandler
+import com.mitteloupe.solid.activity.handler.MemoryHandler
+import com.mitteloupe.solid.activity.handler.MenuOpenedHandler
+import com.mitteloupe.solid.activity.handler.MetaDataHandler
+import com.mitteloupe.solid.activity.handler.NavigationHandler
+import com.mitteloupe.solid.activity.handler.NewIntentHandler
+import com.mitteloupe.solid.activity.handler.OptionsMenuHandler
+import com.mitteloupe.solid.activity.handler.PermissionHandler
+import com.mitteloupe.solid.activity.handler.SearchHandler
+import com.mitteloupe.solid.activity.handler.TitleHandler
+import com.mitteloupe.solid.activity.handler.TouchHandler
+import com.mitteloupe.solid.activity.handler.ViewCreationHandler
+import com.mitteloupe.solid.activity.handler.WindowAttachmentHandler
+import com.mitteloupe.solid.activity.handler.WindowFocusHandler
+import com.mitteloupe.solid.activity.handler.WindowModeHandler
 
 abstract class SolidActivity : AppCompatActivity() {
     open val lifecycleHandlers: List<LifecycleHandler> = emptyList()

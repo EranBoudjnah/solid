@@ -271,7 +271,7 @@ abstract class SolidActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         instanceStateHandlers.forEach { handler ->
-            handler.onSaveInstanceState(savedInstanceState)
+            handler.onRestoreInstanceState(savedInstanceState)
         }
 
         super.onRestoreInstanceState(savedInstanceState)
@@ -282,7 +282,7 @@ abstract class SolidActivity : AppCompatActivity() {
         persistentState: PersistableBundle
     ) {
         instanceStateHandlers.forEach { handler ->
-            handler.onSaveInstanceState(savedInstanceState, persistentState)
+            handler.onRestoreInstanceState(savedInstanceState, persistentState)
         }
 
         super.onRestoreInstanceState(savedInstanceState, persistentState)

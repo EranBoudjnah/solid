@@ -49,7 +49,7 @@ import com.mitteloupe.solid.activity.handler.WindowModeHandler
 abstract class SolidActivity : AppCompatActivity() {
     open val lifecycleHandlers: List<LifecycleHandler> = emptyList()
 
-    open val viewCreationHandler: List<ViewCreationHandler> = emptyList()
+    open val viewCreationHandlers: List<ViewCreationHandler> = emptyList()
 
     open val titleHandlers: List<TitleHandler> = emptyList()
 
@@ -208,7 +208,7 @@ abstract class SolidActivity : AppCompatActivity() {
     // region View creation event functions
 
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet) =
-        viewCreationHandler
+        viewCreationHandlers
             .firstResultOrNull { handler -> handler.onCreateView(name, context, attrs) }
             ?: super.onCreateView(name, context, attrs)
 
@@ -217,14 +217,14 @@ abstract class SolidActivity : AppCompatActivity() {
         name: String,
         context: Context,
         attrs: AttributeSet
-    ) = viewCreationHandler
+    ) = viewCreationHandlers
         .firstResultOrNull { handler -> handler.onCreateView(parent, name, context, attrs) }
         ?: super.onCreateView(parent, name, context, attrs)
 
     override fun onContentChanged() {
         super.onContentChanged()
 
-        viewCreationHandler.forEach { handler ->
+        viewCreationHandlers.forEach { handler ->
             handler.onContentChanged()
         }
     }

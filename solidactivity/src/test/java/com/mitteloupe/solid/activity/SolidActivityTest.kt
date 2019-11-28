@@ -1835,6 +1835,50 @@ class SolidActivityTest {
         verify(permissionHandler3)
             .onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
+
+    @Test
+    fun `Given memory handler when onLowMemory then delegates to all handlers`() {
+        // Given
+        val memoryHandler1: MemoryHandler = mock()
+        val memoryHandler2: MemoryHandler = mock()
+        val memoryHandler3: MemoryHandler = mock()
+
+        val activity = cutController.get()
+        activity.testMemoryHandlers.addAll(
+            listOf(memoryHandler1, memoryHandler2, memoryHandler3)
+        )
+
+        // When
+        activity.onLowMemory()
+
+        // Then
+        verify(memoryHandler1).onLowMemory()
+        verify(memoryHandler2).onLowMemory()
+        verify(memoryHandler3).onLowMemory()
+    }
+
+    @Test
+    fun `Given memory handler when onTrimMemory then delegates to all handlers`() {
+        // Given
+        val memoryHandler1: MemoryHandler = mock()
+        val memoryHandler2: MemoryHandler = mock()
+        val memoryHandler3: MemoryHandler = mock()
+
+        val activity = cutController.get()
+        activity.testMemoryHandlers.addAll(
+            listOf(memoryHandler1, memoryHandler2, memoryHandler3)
+        )
+
+        val level = 7
+
+        // When
+        activity.onTrimMemory(level)
+
+        // Then
+        verify(memoryHandler1).onTrimMemory(level)
+        verify(memoryHandler2).onTrimMemory(level)
+        verify(memoryHandler3).onTrimMemory(level)
+    }
 }
 
 class TestChildActivity : TestActivity()

@@ -1,7 +1,9 @@
 # SOLID Components
 
+[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/com.mittelouple.solid.activity?label=activity:bintray)](https://bintray.com/shadowcra/Solid/com.mittelouple.solid.activity)
+[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/com.mittelouple.solid.recyclerview?label=recyclerview:bintray)](https://bintray.com/shadowcra/Solid/com.mittelouple.solid.recyclerview)
+
 [![Build Status](https://img.shields.io/travis/EranBoudjnah/Solid)](https://travis-ci.com/EranBoudjnah/Solid)
-[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/com.mittelouple.solidcomponents)](https://bintray.com/shadowcra/Solid/com.mittelouple.solidcomponents)
 [![License](https://img.shields.io/github/license/EranBoudjnah/Solid)](http://cocoapods.org/pods/MTCircularSlider)
 [![Platform](https://img.shields.io/badge/platform-android-lightgrey)](https://developer.android.com/reference)
 

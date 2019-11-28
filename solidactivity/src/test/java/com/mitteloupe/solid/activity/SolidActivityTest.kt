@@ -9,6 +9,7 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.util.AttributeSet
+import android.view.ActionMode
 import android.view.ContextMenu
 import android.view.ContextMenu.ContextMenuInfo
 import android.view.KeyEvent
@@ -59,6 +60,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 
 @RunWith(AndroidJUnit4::class)
@@ -1626,12 +1628,13 @@ class SolidActivityTest {
         val menuOpenedHandler1: MenuOpenedHandler = mock {
             on { onMenuOpened(featureId, menu) }.thenReturn(true)
         }
+
         val menuOpenedHandler2: MenuOpenedHandler = mock()
         val menuOpenedHandler3: MenuOpenedHandler = mock()
 
         val activity = cutController.get()
         activity.testMenuOpenedHandlers.addAll(
-            listOf(menuOpenedHandler1, menuOpenedHandler1, menuOpenedHandler1)
+            listOf(menuOpenedHandler1, menuOpenedHandler2, menuOpenedHandler3)
         )
 
         // When
@@ -1642,6 +1645,195 @@ class SolidActivityTest {
         verify(menuOpenedHandler2).onMenuOpened(featureId, menu)
         verify(menuOpenedHandler3, never()).onMenuOpened(featureId, menu)
         assertFalse(actualValue)
+    }
+
+    @Test
+    fun `Given action mode handlers when onWindowStartingActionMode then returns expected ActionMode`() {
+        // Given
+        val actionModeHandler1: ActionModeHandler = mock()
+
+        val callback = mock<ActionMode.Callback>()
+        val expected = mock<ActionMode>()
+        val actionModeHandler2: ActionModeHandler = mock {
+            on { onWindowStartingActionMode(callback) }.thenReturn(expected)
+        }
+
+        val actionModeHandler3: ActionModeHandler = mock()
+
+        val activity = cutController.get()
+        activity.testActionModeHandlers.addAll(
+            listOf(actionModeHandler1, actionModeHandler2, actionModeHandler3)
+        )
+
+        // When
+        val actualValue = activity.onWindowStartingActionMode(callback)
+
+        // Then
+        assertEquals(expected, actualValue)
+        verify(actionModeHandler1).onWindowStartingActionMode(callback)
+        verify(actionModeHandler3, never()).onWindowStartingActionMode(any())
+    }
+
+    @Test
+    fun `Given action mode handlers and type when onWindowStartingActionMode then returns expected ActionMode`() {
+        // Given
+        val actionModeHandler1: ActionModeHandler = mock()
+
+        val callback = mock<ActionMode.Callback>()
+        val type = 1337
+        val expected = mock<ActionMode>()
+        val actionModeHandler2: ActionModeHandler = mock {
+            on { onWindowStartingActionMode(callback, type) }.thenReturn(expected)
+        }
+
+        val actionModeHandler3: ActionModeHandler = mock()
+
+        val activity = cutController.get()
+        activity.testActionModeHandlers.addAll(
+            listOf(actionModeHandler1, actionModeHandler2, actionModeHandler3)
+        )
+
+        // When
+        val actualValue = activity.onWindowStartingActionMode(callback, type)
+
+        // Then
+        assertEquals(expected, actualValue)
+        verify(actionModeHandler1).onWindowStartingActionMode(callback, type)
+        verify(actionModeHandler3, never()).onWindowStartingActionMode(any(), any())
+    }
+
+    @Test
+    fun `Given action mode handlers when onActionModeStarted then delegates to all handlers`() {
+        // Given
+        val actionModeHandler1: ActionModeHandler = mock()
+        val actionModeHandler2: ActionModeHandler = mock()
+        val actionModeHandler3: ActionModeHandler = mock()
+
+        val activity = cutController.get()
+        activity.testActionModeHandlers.addAll(
+            listOf(actionModeHandler1, actionModeHandler2, actionModeHandler3)
+        )
+
+        val mode = mock<ActionMode>()
+
+        // When
+        activity.onActionModeStarted(mode)
+
+        // Then
+        verify(actionModeHandler1).onActionModeStarted(mode)
+        verify(actionModeHandler2).onActionModeStarted(mode)
+        verify(actionModeHandler3).onActionModeStarted(mode)
+    }
+
+    @Test
+    fun `Given action mode handlers when onActionModeFinished then delegates to all handlers`() {
+        // Given
+        val actionModeHandler1: ActionModeHandler = mock()
+        val actionModeHandler2: ActionModeHandler = mock()
+        val actionModeHandler3: ActionModeHandler = mock()
+
+        val activity = cutController.get()
+        activity.testActionModeHandlers.addAll(
+            listOf(actionModeHandler1, actionModeHandler2, actionModeHandler3)
+        )
+
+        val mode = mock<ActionMode>()
+
+        // When
+        activity.onActionModeFinished(mode)
+
+        // Then
+        verify(actionModeHandler1).onActionModeFinished(mode)
+        verify(actionModeHandler2).onActionModeFinished(mode)
+        verify(actionModeHandler3).onActionModeFinished(mode)
+    }
+
+    @Test
+    fun `Given activity for result callback handlers when receive result then delegates to all handlers`() {
+        // Given
+        val activityForResultCallbackHandler1: ActivityForResultCallbackHandler = mock()
+        val activityForResultCallbackHandler2: ActivityForResultCallbackHandler = mock()
+        val activityForResultCallbackHandler3: ActivityForResultCallbackHandler = mock()
+
+        val activity = cutController.get()
+        activity.testActivityForResultCallbackHandlers.addAll(
+            listOf(
+                activityForResultCallbackHandler1,
+                activityForResultCallbackHandler2,
+                activityForResultCallbackHandler3
+            )
+        )
+
+        val requestCode = 17
+        val resultCode = 7
+        val resultIntent = mock<Intent>()
+
+        // When
+        shadowOf(activity).callOnActivityResult(requestCode, resultCode, resultIntent)
+
+        // Then
+        verify(activityForResultCallbackHandler1)
+            .onActivityResult(requestCode, resultCode, resultIntent)
+        verify(activityForResultCallbackHandler2)
+            .onActivityResult(requestCode, resultCode, resultIntent)
+        verify(activityForResultCallbackHandler3)
+            .onActivityResult(requestCode, resultCode, resultIntent)
+    }
+
+    @Test
+    fun `Given activity for result callback handlers when onActivityReenter then delegates to all handlers`() {
+        // Given
+        val activityForResultCallbackHandler1: ActivityForResultCallbackHandler = mock()
+        val activityForResultCallbackHandler2: ActivityForResultCallbackHandler = mock()
+        val activityForResultCallbackHandler3: ActivityForResultCallbackHandler = mock()
+
+        val activity = cutController.get()
+        activity.testActivityForResultCallbackHandlers.addAll(
+            listOf(
+                activityForResultCallbackHandler1,
+                activityForResultCallbackHandler2,
+                activityForResultCallbackHandler3
+            )
+        )
+
+        val resultCode = 7
+        val data = mock<Intent>()
+
+        // When
+        activity.onActivityReenter(resultCode, data)
+
+        // Then
+        verify(activityForResultCallbackHandler1).onActivityReenter(resultCode, data)
+        verify(activityForResultCallbackHandler2).onActivityReenter(resultCode, data)
+        verify(activityForResultCallbackHandler3).onActivityReenter(resultCode, data)
+    }
+
+    @Test
+    fun `Given permission handlers when receive permission result then delegates to all handlers`() {
+        // Given
+        val permissionHandler1: PermissionHandler = mock()
+        val permissionHandler2: PermissionHandler = mock()
+        val permissionHandler3: PermissionHandler = mock()
+
+        val activity = cutController.get()
+        activity.testPermissionHandlers.addAll(
+            listOf(permissionHandler1, permissionHandler2, permissionHandler3)
+        )
+
+        val requestCode = 3
+        val permissions = arrayOf("Permission1", "Permission2")
+        val grantResults = intArrayOf(1, 1)
+
+        // When
+        activity.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        // Then
+        verify(permissionHandler1)
+            .onRequestPermissionsResult(requestCode, permissions, grantResults)
+        verify(permissionHandler2)
+            .onRequestPermissionsResult(requestCode, permissions, grantResults)
+        verify(permissionHandler3)
+            .onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }
 

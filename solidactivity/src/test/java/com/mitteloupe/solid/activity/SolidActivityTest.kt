@@ -63,7 +63,7 @@ import org.robolectric.android.controller.ActivityController
 
 @RunWith(AndroidJUnit4::class)
 class SolidActivityTest {
-    lateinit var cutController: ActivityController<TestActivity>
+    private lateinit var cutController: ActivityController<TestActivity>
 
     @Before
     fun setUp() {
@@ -1497,6 +1497,151 @@ class SolidActivityTest {
         verify(contextMenuHandler1).onContextMenuClosed(menu)
         verify(contextMenuHandler2).onContextMenuClosed(menu)
         verify(contextMenuHandler3).onContextMenuClosed(menu)
+    }
+
+    @Test
+    fun `Given options menu handlers when onPrepareOptionsMenu then delegates to handlers until intercepted`() {
+        // Given
+        val menu = mock<Menu>()
+        val optionsMenuHandler1: OptionsMenuHandler = mock {
+            on { onPrepareOptionsMenu(menu) }.thenReturn(true)
+        }
+        val optionsMenuHandler2: OptionsMenuHandler = mock()
+        val optionsMenuHandler3: OptionsMenuHandler = mock()
+
+        cutController
+            .create()
+            .start()
+            .postCreate(null)
+            .resume()
+
+        val activity = cutController.get()
+        activity.testOptionsMenuHandlers.addAll(
+            listOf(optionsMenuHandler1, optionsMenuHandler2, optionsMenuHandler3)
+        )
+
+        // When
+        activity.onPrepareOptionsMenu(menu)
+
+        // Then
+        verify(optionsMenuHandler1).onPrepareOptionsMenu(menu)
+        verify(optionsMenuHandler2).onPrepareOptionsMenu(menu)
+        verify(optionsMenuHandler3, never()).onPrepareOptionsMenu(menu)
+    }
+
+    @Test
+    fun `Given options menu handlers when onCreateOptionsMenu then delegates to handlers until intercepted`() {
+        // Given
+        val menu = mock<Menu>()
+        val optionsMenuHandler1: OptionsMenuHandler = mock {
+            on { onCreateOptionsMenu(menu) }.thenReturn(true)
+        }
+        val optionsMenuHandler2: OptionsMenuHandler = mock()
+        val optionsMenuHandler3: OptionsMenuHandler = mock()
+
+        cutController
+            .create()
+            .start()
+            .postCreate(null)
+            .resume()
+
+        val activity = cutController.get()
+        activity.testOptionsMenuHandlers.addAll(
+            listOf(optionsMenuHandler1, optionsMenuHandler2, optionsMenuHandler3)
+        )
+
+        // When
+        activity.onCreateOptionsMenu(menu)
+
+        // Then
+        verify(optionsMenuHandler1).onCreateOptionsMenu(menu)
+        verify(optionsMenuHandler2).onCreateOptionsMenu(menu)
+        verify(optionsMenuHandler3, never()).onCreateOptionsMenu(menu)
+    }
+
+    @Test
+    fun `Given options menu handlers when onOptionsItemSelected then delegates to handlers until handled`() {
+        // Given
+        val optionsMenuHandler1: OptionsMenuHandler = mock()
+        val item = mock<MenuItem>()
+        val optionsMenuHandler2: OptionsMenuHandler = mock {
+            on { onOptionsItemSelected(item) }.thenReturn(true)
+        }
+        val optionsMenuHandler3: OptionsMenuHandler = mock()
+
+        cutController
+            .create()
+            .start()
+            .postCreate(null)
+            .resume()
+
+        val activity = cutController.get()
+        activity.testOptionsMenuHandlers.addAll(
+            listOf(optionsMenuHandler1, optionsMenuHandler2, optionsMenuHandler3)
+        )
+
+        // When
+        activity.onOptionsItemSelected(item)
+
+        // Then
+        verify(optionsMenuHandler1).onOptionsItemSelected(item)
+        verify(optionsMenuHandler2).onOptionsItemSelected(item)
+        verify(optionsMenuHandler3, never()).onOptionsItemSelected(item)
+    }
+
+    @Test
+    fun `Given options menu handlers when onOptionsMenuClosed then delegates to all handlers`() {
+        // Given
+        val optionsMenuHandler1: OptionsMenuHandler = mock()
+        val optionsMenuHandler2: OptionsMenuHandler = mock()
+        val optionsMenuHandler3: OptionsMenuHandler = mock()
+
+        cutController
+            .create()
+            .start()
+            .postCreate(null)
+            .resume()
+
+        val activity = cutController.get()
+        activity.testOptionsMenuHandlers.addAll(
+            listOf(optionsMenuHandler1, optionsMenuHandler2, optionsMenuHandler3)
+        )
+
+        val menu = mock<Menu>()
+
+        // When
+        activity.onOptionsMenuClosed(menu)
+
+        // Then
+        verify(optionsMenuHandler1).onOptionsMenuClosed(menu)
+        verify(optionsMenuHandler2).onOptionsMenuClosed(menu)
+        verify(optionsMenuHandler3).onOptionsMenuClosed(menu)
+    }
+
+    @Test
+    fun `Given menu opened handlers when onMenuOpened then delegates to handlers until intercepted`() {
+        // Given
+        val featureId = 321
+        val menu = mock<Menu>()
+        val menuOpenedHandler1: MenuOpenedHandler = mock {
+            on { onMenuOpened(featureId, menu) }.thenReturn(true)
+        }
+        val menuOpenedHandler2: MenuOpenedHandler = mock()
+        val menuOpenedHandler3: MenuOpenedHandler = mock()
+
+        val activity = cutController.get()
+        activity.testMenuOpenedHandlers.addAll(
+            listOf(menuOpenedHandler1, menuOpenedHandler1, menuOpenedHandler1)
+        )
+
+        // When
+        val actualValue = activity.onMenuOpened(featureId, menu)
+
+        // Then
+        verify(menuOpenedHandler1).onMenuOpened(featureId, menu)
+        verify(menuOpenedHandler2).onMenuOpened(featureId, menu)
+        verify(menuOpenedHandler3, never()).onMenuOpened(featureId, menu)
+        assertFalse(actualValue)
     }
 }
 

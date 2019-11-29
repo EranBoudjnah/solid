@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mitteloupe.solid.activity" />
+<manifest package="com.mitteloupe.solid.activity" />

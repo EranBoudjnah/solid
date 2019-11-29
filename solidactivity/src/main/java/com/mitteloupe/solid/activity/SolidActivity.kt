@@ -98,107 +98,95 @@ abstract class SolidActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        lifecycleHandlers
-            .forEach { handler ->
-                handler.onCreate(savedInstanceState)
-            }
+        lifecycleHandlers.forEach { handler ->
+            handler.onCreate(savedInstanceState)
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
-        lifecycleHandlers
-            .forEach { handler ->
-                handler.onPostCreate(savedInstanceState)
-            }
+        lifecycleHandlers.forEach { handler ->
+            handler.onPostCreate(savedInstanceState)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
 
-        lifecycleHandlers
-            .forEach { handler ->
-                handler.onCreate(savedInstanceState, persistentState)
-            }
+        lifecycleHandlers.forEach { handler ->
+            handler.onCreate(savedInstanceState, persistentState)
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onPostCreate(savedInstanceState, persistentState)
 
-        lifecycleHandlers
-            .forEach { handler ->
-                handler.onPostCreate(savedInstanceState, persistentState)
-            }
+        lifecycleHandlers.forEach { handler ->
+            handler.onPostCreate(savedInstanceState, persistentState)
+        }
     }
 
     override fun onRestart() {
         super.onRestart()
 
-        lifecycleHandlers
-            .forEach { handler ->
-                handler.onRestart()
-            }
+        lifecycleHandlers.forEach { handler ->
+            handler.onRestart()
+        }
     }
 
     override fun onStart() {
         super.onStart()
 
-        lifecycleHandlers
-            .forEach { handler ->
-                handler.onStart()
-            }
+        lifecycleHandlers.forEach { handler ->
+            handler.onStart()
+        }
     }
 
     override fun onResume() {
         super.onResume()
 
-        lifecycleHandlers
-            .forEach { handler ->
-                handler.onResume()
-            }
+        lifecycleHandlers.forEach { handler ->
+            handler.onResume()
+        }
     }
 
     override fun onPostResume() {
         super.onPostResume()
 
-        lifecycleHandlers
-            .forEach { handler ->
-                handler.onPostResume()
-            }
+        lifecycleHandlers.forEach { handler ->
+            handler.onPostResume()
+        }
     }
 
     override fun onUserLeaveHint() {
-        lifecycleHandlers
-            .forEach { handler ->
-                handler.onUserLeaveHint()
-            }
+        lifecycleHandlers.forEach { handler ->
+            handler.onUserLeaveHint()
+        }
 
         super.onUserLeaveHint()
     }
 
     override fun onPause() {
-        lifecycleHandlers
-            .forEach { handler ->
-                handler.onPause()
-            }
+        lifecycleHandlers.forEach { handler ->
+            handler.onPause()
+        }
 
         super.onPause()
     }
 
     override fun onStop() {
-        lifecycleHandlers
-            .forEach { handler ->
-                handler.onStop()
-            }
+        lifecycleHandlers.forEach { handler ->
+            handler.onStop()
+        }
 
         super.onStop()
     }
 
     override fun onDestroy() {
-        lifecycleHandlers
-            .forEach { handler ->
-                handler.onDestroy()
-            }
+        lifecycleHandlers.forEach { handler ->
+            handler.onDestroy()
+        }
 
         super.onDestroy()
     }

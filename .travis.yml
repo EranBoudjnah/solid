@@ -15,4 +15,4 @@ android:
     - 'google-gdk-license-.+'
 
 script:
-- ./gradlew clean assembleDebug test lint
+- ./gradlew clean assembleDebug test lint ktlintCheck

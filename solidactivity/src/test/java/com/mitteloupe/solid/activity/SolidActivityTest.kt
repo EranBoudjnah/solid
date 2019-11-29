@@ -2,6 +2,7 @@ package com.mitteloupe.solid.activity
 
 import android.app.Activity
 import android.app.TaskStackBuilder
+import android.app.assist.AssistContent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -1932,6 +1933,158 @@ class SolidActivityTest {
         verify(searchHandler1).onSearchRequested(searchEvent)
         verify(searchHandler2).onSearchRequested(searchEvent)
         verify(searchHandler3, never()).onSearchRequested(any())
+    }
+
+    @Test
+    fun `Given local voice interaction handlers when onLocalVoiceInteractionStarted then delegates to handlers`() {
+        // Given
+        val localVoiceInteractionHandler1: LocalVoiceInteractionHandler = mock()
+        val localVoiceInteractionHandler2: LocalVoiceInteractionHandler = mock()
+        val localVoiceInteractionHandler3: LocalVoiceInteractionHandler = mock()
+
+        val activity = cutController.get()
+        activity.testLocalVoiceInteractionHandlers.addAll(
+            listOf(
+                localVoiceInteractionHandler1,
+                localVoiceInteractionHandler2,
+                localVoiceInteractionHandler3
+            )
+        )
+
+        // When
+        activity.onLocalVoiceInteractionStarted()
+
+        // Then
+        verify(localVoiceInteractionHandler1).onLocalVoiceInteractionStarted()
+        verify(localVoiceInteractionHandler2).onLocalVoiceInteractionStarted()
+        verify(localVoiceInteractionHandler3).onLocalVoiceInteractionStarted()
+    }
+
+    @Test
+    fun `Given local voice interaction handlers when onLocalVoiceInteractionStopped then delegates to handlers`() {
+        // Given
+        val localVoiceInteractionHandler1: LocalVoiceInteractionHandler = mock()
+        val localVoiceInteractionHandler2: LocalVoiceInteractionHandler = mock()
+        val localVoiceInteractionHandler3: LocalVoiceInteractionHandler = mock()
+
+        val activity = cutController.get()
+        activity.testLocalVoiceInteractionHandlers.addAll(
+            listOf(
+                localVoiceInteractionHandler1,
+                localVoiceInteractionHandler2,
+                localVoiceInteractionHandler3
+            )
+        )
+
+        // When
+        activity.onLocalVoiceInteractionStopped()
+
+        // Then
+        verify(localVoiceInteractionHandler1).onLocalVoiceInteractionStopped()
+        verify(localVoiceInteractionHandler2).onLocalVoiceInteractionStopped()
+        verify(localVoiceInteractionHandler3).onLocalVoiceInteractionStopped()
+    }
+
+    @Test
+    fun `Given meta data handlers when onProvideAssistContent then delegates to all handlers`() {
+        // Given
+        val metaDataHandler1: MetaDataHandler = mock()
+        val metaDataHandler2: MetaDataHandler = mock()
+        val metaDataHandler3: MetaDataHandler = mock()
+
+        val activity = cutController.get()
+        activity.testMetaDataHandlers.addAll(
+            listOf(metaDataHandler1, metaDataHandler2, metaDataHandler3)
+        )
+
+        val outContent = AssistContent()
+
+        // When
+        activity.onProvideAssistContent(outContent)
+
+        // Then
+        inOrder(metaDataHandler1, metaDataHandler2, metaDataHandler3) {
+            verify(metaDataHandler1).onProvideAssistContent(outContent)
+            verify(metaDataHandler2).onProvideAssistContent(outContent)
+            verify(metaDataHandler3).onProvideAssistContent(outContent)
+        }
+    }
+
+    @Test
+    fun `Given meta data handlers when onProvideAssistData then delegates to all handlers`() {
+        // Given
+        val metaDataHandler1: MetaDataHandler = mock()
+        val metaDataHandler2: MetaDataHandler = mock()
+        val metaDataHandler3: MetaDataHandler = mock()
+
+        val activity = cutController.get()
+        activity.testMetaDataHandlers.addAll(
+            listOf(metaDataHandler1, metaDataHandler2, metaDataHandler3)
+        )
+
+        val data = mock<Bundle>()
+
+        // When
+        activity.onProvideAssistData(data)
+
+        // Then
+        inOrder(metaDataHandler1, metaDataHandler2, metaDataHandler3) {
+            verify(metaDataHandler1).onProvideAssistData(data)
+            verify(metaDataHandler2).onProvideAssistData(data)
+            verify(metaDataHandler3).onProvideAssistData(data)
+        }
+    }
+
+    @Test
+    fun `Given meta data handlers when onCreateDescription then delegates to handlers until description returned`() {
+        // Given
+        val metaDataHandler1: MetaDataHandler = mock()
+
+        val expected = "Test Description"
+        val metaDataHandler2: MetaDataHandler = mock {
+            on { onCreateDescription() }.thenReturn(expected)
+        }
+
+        val metaDataHandler3: MetaDataHandler = mock()
+
+        val activity = cutController.get()
+        activity.testMetaDataHandlers.addAll(
+            listOf(metaDataHandler1, metaDataHandler2, metaDataHandler3)
+        )
+
+        // When
+        val actualValue = activity.onCreateDescription()
+
+        // Then
+        verify(metaDataHandler1).onCreateDescription()
+        assertEquals(expected, actualValue)
+        verify(metaDataHandler3, never()).onCreateDescription()
+    }
+
+    @Test
+    fun `Given meta data handlers when onCreateDescription then delegates to all handlers`() {
+        // Given
+        val metaDataHandler1: MetaDataHandler = mock()
+
+        val metaDataHandler2: MetaDataHandler = mock()
+
+        val metaDataHandler3: MetaDataHandler = mock()
+
+        val activity = cutController.get()
+        activity.testMetaDataHandlers.addAll(
+            listOf(metaDataHandler1, metaDataHandler2, metaDataHandler3)
+        )
+
+        // When
+        val actualValue = activity.onCreateDescription()
+
+        // Then
+        inOrder(metaDataHandler1, metaDataHandler2, metaDataHandler3) {
+            verify(metaDataHandler1).onCreateDescription()
+            verify(metaDataHandler2).onCreateDescription()
+            verify(metaDataHandler3).onCreateDescription()
+        }
+        assertNull(actualValue)
     }
 }
 

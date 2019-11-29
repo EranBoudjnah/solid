@@ -662,6 +662,7 @@ abstract class SolidActivity : AppCompatActivity() {
 
     override fun onLocalVoiceInteractionStarted() {
         super.onLocalVoiceInteractionStarted()
+
         localVoiceInteractionHandlers.forEach { handler ->
             handler.onLocalVoiceInteractionStarted()
         }
@@ -671,6 +672,7 @@ abstract class SolidActivity : AppCompatActivity() {
         localVoiceInteractionHandlers.forEach { handler ->
             handler.onLocalVoiceInteractionStopped()
         }
+
         super.onLocalVoiceInteractionStopped()
     }
 

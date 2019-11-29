@@ -27,7 +27,7 @@ And then the implementation.
 
 ```groovy
 dependencies {
-    implementation "com.mitteloupe.solid:solidactivity:1.0.2"
+    implementation "com.mitteloupe.solid:solidactivity:1.0.3"
     implementation "com.mitteloupe.solid:solidrecyclerview:1.0.2"
 }
 ```
@@ -37,9 +37,35 @@ dependencies {
 
 ### Activity
 
-You can use `SolidActivity` as the parent activity of any activity in your app. Instead of having a BaseActivity, you can now provide common activity code by overriding one or more of the handler lists, providing a list of handlers.
+Use `SolidActivity` as the parent activity of any activity in your app. Instead of having a BaseActivity, you can now provide common activity code by overriding one or more of the handler lists, providing a list of handlers.
 
-See the provided sample project for a concrete example.
+Common use cases can include dependency injection, analytics, logging, setting up of ViewHolders. 
+
+A `Koin` injection handler will look as follows:
+
+```kotlin
+class KoinActivityScopeHandler(
+    private val activity: Activity,
+    private val currentScope: Scope
+) : LifecycleHandler {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        currentScope.declare(activity)
+    }
+}
+```
+
+Implement an activity using the handler as follows:
+
+```kotlin
+class MainActivity : SolidActivity() {
+    override val lifecycleHandlers = listOf(
+        KoinActivityScopeHandler(this, currentScope),
+        ...
+    )
+
+    ...
+}
+```
 
 ### Adapter
 

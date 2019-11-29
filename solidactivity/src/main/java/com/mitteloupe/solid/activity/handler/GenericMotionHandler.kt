@@ -3,21 +3,19 @@ package com.mitteloupe.solid.activity.handler
 import android.app.Activity
 import android.view.MotionEvent
 
-abstract class GenericMotionHandler {
+interface GenericMotionHandler {
     /**
      * @see Activity.onUserInteraction
      */
-    open fun onUserInteraction() {
-        // Do nothing. Override to implement functionality.
-    }
+    fun onUserInteraction() = Unit
 
     /**
      * @see Activity.onTrackballEvent
      */
-    open fun onTrackballEvent(event: MotionEvent) = false
+    fun onTrackballEvent(event: MotionEvent) = false
 
     /**
      * @see Activity.onGenericMotionEvent
      */
-    open fun onGenericMotionEvent(event: MotionEvent) = false
+    fun onGenericMotionEvent(event: MotionEvent) = false
 }

@@ -7,23 +7,19 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 
-abstract class ContextMenuHandler {
+interface ContextMenuHandler {
     /**
      * @see Activity.onCreateContextMenu
      */
-    open fun onCreateContextMenu(menu: ContextMenu, view: View, menuInfo: ContextMenuInfo) {
-        // Do nothing. Override to implement functionality.
-    }
+    fun onCreateContextMenu(menu: ContextMenu, view: View, menuInfo: ContextMenuInfo) = Unit
 
     /**
      * @see Activity.onContextItemSelected
      */
-    open fun onContextItemSelected(item: MenuItem) = false
+    fun onContextItemSelected(item: MenuItem) = false
 
     /**
      * @see Activity.onContextMenuClosed
      */
-    open fun onContextMenuClosed(menu: Menu) {
-        // Do nothing. Override to implement functionality.
-    }
+    fun onContextMenuClosed(menu: Menu) = Unit
 }

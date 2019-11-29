@@ -17,6 +17,7 @@ import android.view.KeyboardShortcutGroup
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
+import android.view.SearchEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
@@ -1878,6 +1879,59 @@ class SolidActivityTest {
         verify(memoryHandler1).onTrimMemory(level)
         verify(memoryHandler2).onTrimMemory(level)
         verify(memoryHandler3).onTrimMemory(level)
+    }
+
+    @Test
+    fun `Given search handlers when onSearchRequested then delegates to handlers until consumed`() {
+        // Given
+        val searchHandler1: SearchHandler = mock()
+
+        val searchHandler2: SearchHandler = mock {
+            on { onSearchRequested() }.thenReturn(true)
+        }
+
+        val searchHandler3: SearchHandler = mock()
+
+        val activity = cutController.get()
+        activity.testSearchHandlers.addAll(
+            listOf(searchHandler1, searchHandler2, searchHandler3)
+        )
+
+        // When
+        val actualValue = activity.onSearchRequested()
+
+        // Then
+        assertTrue(actualValue)
+        verify(searchHandler1).onSearchRequested()
+        verify(searchHandler2).onSearchRequested()
+        verify(searchHandler3, never()).onSearchRequested()
+    }
+
+    @Test
+    fun `Given search handlers and search event when onSearchRequested then delegates to handlers until consumed`() {
+        // Given
+        val searchHandler1: SearchHandler = mock()
+
+        val searchEvent = mock<SearchEvent>()
+        val searchHandler2: SearchHandler = mock {
+            on { onSearchRequested(searchEvent) }.thenReturn(true)
+        }
+
+        val searchHandler3: SearchHandler = mock()
+
+        val activity = cutController.get()
+        activity.testSearchHandlers.addAll(
+            listOf(searchHandler1, searchHandler2, searchHandler3)
+        )
+
+        // When
+        val actualValue = activity.onSearchRequested(searchEvent)
+
+        // Then
+        assertTrue(actualValue)
+        verify(searchHandler1).onSearchRequested(searchEvent)
+        verify(searchHandler2).onSearchRequested(searchEvent)
+        verify(searchHandler3, never()).onSearchRequested(any())
     }
 }
 

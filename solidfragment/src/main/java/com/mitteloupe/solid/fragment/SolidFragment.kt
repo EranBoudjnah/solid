@@ -1,6 +1,7 @@
 package com.mitteloupe.solid.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.AttributeSet
@@ -12,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.mitteloupe.solid.fragment.handler.ActivityForResultCallbackHandler
 import com.mitteloupe.solid.fragment.handler.AnimationHandler
 import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
 import com.mitteloupe.solid.fragment.handler.InflationHandler
@@ -31,6 +33,8 @@ abstract class SolidFragment : Fragment() {
     open val animationHandlers: List<AnimationHandler> = emptyList()
 
     open val windowModeHandlers: List<WindowModeHandler> = emptyList()
+
+    open val activityForResultCallbackHandlers: List<ActivityForResultCallbackHandler> = emptyList()
 
     // region Lifecycle event functions
 
@@ -255,6 +259,18 @@ abstract class SolidFragment : Fragment() {
     }
 
     // endregion Window Mode event functions
+
+    // region Activity for result event function
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        activityForResultCallbackHandlers.forEach { handler ->
+            handler.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    // endregion Activity for result event function
 }
 
 private fun <HANDLER, RETURN_VALUE> List<HANDLER>.firstResultOrNull(

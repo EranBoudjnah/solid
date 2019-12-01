@@ -2,6 +2,7 @@ package com.mitteloupe.solid.fragment
 
 import android.animation.Animator
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.AttributeSet
@@ -17,6 +18,7 @@ import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mitteloupe.solid.fragment.handler.ActivityForResultCallbackHandler
 import com.mitteloupe.solid.fragment.handler.AnimationHandler
 import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
 import com.mitteloupe.solid.fragment.handler.InflationHandler
@@ -675,6 +677,36 @@ class SolidFragmentTest {
         verify(windowModeHandler3).onPictureInPictureModeChanged(isInPictureInPictureMode)
     }
 
+    @Test
+    fun `Given activity for result handlers when onActivityResult then delegates to all handlers`() {
+        // Given
+        val activityForResultCallbackHandler1: ActivityForResultCallbackHandler = mock()
+        val activityForResultCallbackHandler2: ActivityForResultCallbackHandler = mock()
+        val activityForResultCallbackHandler3: ActivityForResultCallbackHandler = mock()
+
+        givenFragmentWithSetup { testFragment ->
+            testFragment.testActivityForResultCallbackHandlers.addAll(
+                listOf(
+                    activityForResultCallbackHandler1,
+                    activityForResultCallbackHandler2,
+                    activityForResultCallbackHandler3
+                )
+            )
+        }
+
+        val requestCode = 1337
+        val responseCode = 0xFEED
+        val data = mock<Intent>()
+
+        // When
+        cut.onActivityResult(requestCode, responseCode, data)
+
+        // Then
+        verify(activityForResultCallbackHandler1).onActivityResult(requestCode, responseCode, data)
+        verify(activityForResultCallbackHandler2).onActivityResult(requestCode, responseCode, data)
+        verify(activityForResultCallbackHandler3).onActivityResult(requestCode, responseCode, data)
+    }
+
     private fun givenFragmentWithSetup(setup: (TestFragment) -> Unit) {
         fragmentScenario = launchFragmentInContainer {
             cut = TestFragment().apply {
@@ -709,4 +741,8 @@ class TestFragment : SolidFragment() {
     val testWindowModeHandlers = mutableListOf<WindowModeHandler>()
     override val windowModeHandlers: List<WindowModeHandler>
         get() = testWindowModeHandlers
+
+    val testActivityForResultCallbackHandlers = mutableListOf<ActivityForResultCallbackHandler>()
+    override val activityForResultCallbackHandlers: List<ActivityForResultCallbackHandler>
+        get() = testActivityForResultCallbackHandlers
 }

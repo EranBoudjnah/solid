@@ -2,6 +2,7 @@ package com.mitteloupe.solid.fragment
 
 import android.animation.Animator
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.ContextMenu
@@ -21,6 +22,7 @@ import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
 import com.mitteloupe.solid.fragment.handler.InflationHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
+import com.mitteloupe.solid.fragment.handler.WindowModeHandler
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.clearInvocations
 import com.nhaarman.mockitokotlin2.inOrder
@@ -540,7 +542,7 @@ class SolidFragmentTest {
     }
 
     @Test
-    fun `Given animation handlers when onCreateAnimator then delegates to all handlers`() {
+    fun `Given animation handlers when onCreateAnimator then delegates to handlers until value returned`() {
         // Given
         val animationHandler1: AnimationHandler = mock()
 
@@ -571,7 +573,7 @@ class SolidFragmentTest {
     }
 
     @Test
-    fun `Given animation handlers when onCreateAnimation then delegates to all handlers`() {
+    fun `Given animation handlers when onCreateAnimation then delegates to handlers until value returned`() {
         // Given
         val animationHandler1: AnimationHandler = mock()
 
@@ -599,6 +601,78 @@ class SolidFragmentTest {
         verify(animationHandler1).onCreateAnimation(transit, enter, nextAnim)
         verify(animationHandler2).onCreateAnimation(transit, enter, nextAnim)
         verify(animationHandler3, never()).onCreateAnimation(any(), any(), any())
+    }
+
+    @Test
+    fun `Given window mode handlers when onConfigurationChanged then delegates to all handlers`() {
+        // Given
+        val windowModeHandler1: WindowModeHandler = mock()
+        val windowModeHandler2: WindowModeHandler = mock()
+        val windowModeHandler3: WindowModeHandler = mock()
+
+        givenFragmentWithSetup { testFragment ->
+            testFragment.testWindowModeHandlers.addAll(
+                listOf(windowModeHandler1, windowModeHandler2, windowModeHandler3)
+            )
+        }
+
+        val newConfiguration = mock<Configuration>()
+
+        // When
+        cut.onConfigurationChanged(newConfiguration)
+
+        // Then
+        verify(windowModeHandler1).onConfigurationChanged(newConfiguration)
+        verify(windowModeHandler2).onConfigurationChanged(newConfiguration)
+        verify(windowModeHandler3).onConfigurationChanged(newConfiguration)
+    }
+
+    @Test
+    fun `Given window mode handlers when onMultiWindowModeChanged then delegates to all handlers`() {
+        // Given
+        val windowModeHandler1: WindowModeHandler = mock()
+        val windowModeHandler2: WindowModeHandler = mock()
+        val windowModeHandler3: WindowModeHandler = mock()
+
+        givenFragmentWithSetup { testFragment ->
+            testFragment.testWindowModeHandlers.addAll(
+                listOf(windowModeHandler1, windowModeHandler2, windowModeHandler3)
+            )
+        }
+
+        val isInMultiWindowMode = true
+
+        // When
+        cut.onMultiWindowModeChanged(isInMultiWindowMode)
+
+        // Then
+        verify(windowModeHandler1).onMultiWindowModeChanged(isInMultiWindowMode)
+        verify(windowModeHandler2).onMultiWindowModeChanged(isInMultiWindowMode)
+        verify(windowModeHandler3).onMultiWindowModeChanged(isInMultiWindowMode)
+    }
+
+    @Test
+    fun `Given window mode handlers when onPictureInPictureModeChanged then delegates to all handlers`() {
+        // Given
+        val windowModeHandler1: WindowModeHandler = mock()
+        val windowModeHandler2: WindowModeHandler = mock()
+        val windowModeHandler3: WindowModeHandler = mock()
+
+        givenFragmentWithSetup { testFragment ->
+            testFragment.testWindowModeHandlers.addAll(
+                listOf(windowModeHandler1, windowModeHandler2, windowModeHandler3)
+            )
+        }
+
+        val isInPictureInPictureMode = true
+
+        // When
+        cut.onPictureInPictureModeChanged(isInPictureInPictureMode)
+
+        // Then
+        verify(windowModeHandler1).onPictureInPictureModeChanged(isInPictureInPictureMode)
+        verify(windowModeHandler2).onPictureInPictureModeChanged(isInPictureInPictureMode)
+        verify(windowModeHandler3).onPictureInPictureModeChanged(isInPictureInPictureMode)
     }
 
     private fun givenFragmentWithSetup(setup: (TestFragment) -> Unit) {
@@ -631,4 +705,8 @@ class TestFragment : SolidFragment() {
     val testAnimationHandlers = mutableListOf<AnimationHandler>()
     override val animationHandlers: List<AnimationHandler>
         get() = testAnimationHandlers
+
+    val testWindowModeHandlers = mutableListOf<WindowModeHandler>()
+    override val windowModeHandlers: List<WindowModeHandler>
+        get() = testWindowModeHandlers
 }

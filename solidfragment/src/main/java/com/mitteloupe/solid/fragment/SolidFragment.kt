@@ -1,7 +1,6 @@
 package com.mitteloupe.solid.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.AttributeSet
@@ -18,6 +17,7 @@ import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
 import com.mitteloupe.solid.fragment.handler.InflationHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
+import com.mitteloupe.solid.fragment.handler.WindowModeHandler
 
 abstract class SolidFragment : Fragment() {
     open val lifecycleHandlers: List<LifecycleHandler> = emptyList()
@@ -29,6 +29,8 @@ abstract class SolidFragment : Fragment() {
     open val inflationHandlers: List<InflationHandler> = emptyList()
 
     open val animationHandlers: List<AnimationHandler> = emptyList()
+
+    open val windowModeHandlers: List<WindowModeHandler> = emptyList()
 
     // region Lifecycle event functions
 
@@ -225,6 +227,34 @@ abstract class SolidFragment : Fragment() {
         } ?: super.onCreateAnimation(transit, enter, nextAnim)
 
     // endregion Animation event functions
+
+    // region Window Mode event functions
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        windowModeHandlers.forEach { handler ->
+            handler.onConfigurationChanged(newConfig)
+        }
+    }
+
+    override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode)
+
+        windowModeHandlers.forEach { handler ->
+            handler.onMultiWindowModeChanged(isInMultiWindowMode)
+        }
+    }
+
+    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode)
+
+        windowModeHandlers.forEach { handler ->
+            handler.onPictureInPictureModeChanged(isInPictureInPictureMode)
+        }
+    }
+
+    // endregion Window Mode event functions
 }
 
 private fun <HANDLER, RETURN_VALUE> List<HANDLER>.firstResultOrNull(

@@ -1,5 +1,6 @@
 package com.mitteloupe.solid.fragment
 
+import android.animation.Animator
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
@@ -10,10 +11,12 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mitteloupe.solid.fragment.handler.AnimationHandler
 import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
 import com.mitteloupe.solid.fragment.handler.InflationHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
@@ -536,6 +539,68 @@ class SolidFragmentTest {
         verify(inflationHandler3).onInflate(context, attributes, savedInstanceState)
     }
 
+    @Test
+    fun `Given animation handlers when onCreateAnimator then delegates to all handlers`() {
+        // Given
+        val animationHandler1: AnimationHandler = mock()
+
+        val transit = 6
+        val enter = true
+        val nextAnim = 8
+        val expectedAnimator = mock<Animator>()
+        val animationHandler2: AnimationHandler = mock {
+            on { onCreateAnimator(transit, enter, nextAnim) }.thenReturn(expectedAnimator)
+        }
+
+        val animationHandler3: AnimationHandler = mock()
+
+        givenFragmentWithSetup { testFragment ->
+            testFragment.testAnimationHandlers.addAll(
+                listOf(animationHandler1, animationHandler2, animationHandler3)
+            )
+        }
+
+        // When
+        val actualValue = cut.onCreateAnimator(transit, enter, nextAnim)
+
+        // Then
+        assertEquals(expectedAnimator, actualValue)
+        verify(animationHandler1).onCreateAnimator(transit, enter, nextAnim)
+        verify(animationHandler2).onCreateAnimator(transit, enter, nextAnim)
+        verify(animationHandler3, never()).onCreateAnimator(any(), any(), any())
+    }
+
+    @Test
+    fun `Given animation handlers when onCreateAnimation then delegates to all handlers`() {
+        // Given
+        val animationHandler1: AnimationHandler = mock()
+
+        val transit = 6
+        val enter = true
+        val nextAnim = 8
+        val expectedAnimation = mock<Animation>()
+        val animationHandler2: AnimationHandler = mock {
+            on { onCreateAnimation(transit, enter, nextAnim) }.thenReturn(expectedAnimation)
+        }
+
+        val animationHandler3: AnimationHandler = mock()
+
+        givenFragmentWithSetup { testFragment ->
+            testFragment.testAnimationHandlers.addAll(
+                listOf(animationHandler1, animationHandler2, animationHandler3)
+            )
+        }
+
+        // When
+        val actualValue = cut.onCreateAnimation(transit, enter, nextAnim)
+
+        // Then
+        assertEquals(expectedAnimation, actualValue)
+        verify(animationHandler1).onCreateAnimation(transit, enter, nextAnim)
+        verify(animationHandler2).onCreateAnimation(transit, enter, nextAnim)
+        verify(animationHandler3, never()).onCreateAnimation(any(), any(), any())
+    }
+
     private fun givenFragmentWithSetup(setup: (TestFragment) -> Unit) {
         fragmentScenario = launchFragmentInContainer {
             cut = TestFragment().apply {
@@ -562,4 +627,8 @@ class TestFragment : SolidFragment() {
     val testInflationHandlers = mutableListOf<InflationHandler>()
     override val inflationHandlers: List<InflationHandler>
         get() = testInflationHandlers
+
+    val testAnimationHandlers = mutableListOf<AnimationHandler>()
+    override val animationHandlers: List<AnimationHandler>
+        get() = testAnimationHandlers
 }

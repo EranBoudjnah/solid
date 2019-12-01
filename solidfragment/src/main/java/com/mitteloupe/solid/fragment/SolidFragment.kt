@@ -1,6 +1,8 @@
 package com.mitteloupe.solid.fragment
 
 import android.content.Context
+import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.ContextMenu
@@ -11,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.mitteloupe.solid.fragment.handler.AnimationHandler
 import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
 import com.mitteloupe.solid.fragment.handler.InflationHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
@@ -24,6 +27,8 @@ abstract class SolidFragment : Fragment() {
     open val optionsMenuHandlers: List<OptionsMenuHandler> = emptyList()
 
     open val inflationHandlers: List<InflationHandler> = emptyList()
+
+    open val animationHandlers: List<AnimationHandler> = emptyList()
 
     // region Lifecycle event functions
 
@@ -206,6 +211,20 @@ abstract class SolidFragment : Fragment() {
     }
 
     // endregion Inflation event function
+
+    // region Animation event functions
+
+    override fun onCreateAnimator(transit: Int, enter: Boolean, nextAnim: Int) =
+        animationHandlers.firstResultOrNull { handler ->
+            handler.onCreateAnimator(transit, enter, nextAnim)
+        } ?: super.onCreateAnimator(transit, enter, nextAnim)
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int) =
+        animationHandlers.firstResultOrNull { handler ->
+            handler.onCreateAnimation(transit, enter, nextAnim)
+        } ?: super.onCreateAnimation(transit, enter, nextAnim)
+
+    // endregion Animation event functions
 }
 
 private fun <HANDLER, RETURN_VALUE> List<HANDLER>.firstResultOrNull(

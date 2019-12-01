@@ -2,6 +2,7 @@ package com.mitteloupe.solid.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.Menu
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
+import com.mitteloupe.solid.fragment.handler.InflationHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
 
@@ -20,6 +22,8 @@ abstract class SolidFragment : Fragment() {
     open val contextMenuHandlers: List<ContextMenuHandler> = emptyList()
 
     open val optionsMenuHandlers: List<OptionsMenuHandler> = emptyList()
+
+    open val inflationHandlers: List<InflationHandler> = emptyList()
 
     // region Lifecycle event functions
 
@@ -190,6 +194,18 @@ abstract class SolidFragment : Fragment() {
     }
 
     // endregion Options Menu event functions
+
+    // region Inflation event function
+
+    override fun onInflate(context: Context, attrs: AttributeSet, savedInstanceState: Bundle?) {
+        super.onInflate(context, attrs, savedInstanceState)
+
+        inflationHandlers.forEach { handler ->
+            handler.onInflate(context, attrs, savedInstanceState)
+        }
+    }
+
+    // endregion Inflation event function
 }
 
 private fun <HANDLER, RETURN_VALUE> List<HANDLER>.firstResultOrNull(

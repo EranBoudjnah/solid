@@ -1,6 +1,8 @@
 package com.mitteloupe.solid.fragment
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.Menu
@@ -13,6 +15,7 @@ import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
+import com.mitteloupe.solid.fragment.handler.InflationHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
 import com.nhaarman.mockitokotlin2.any
@@ -507,6 +510,32 @@ class SolidFragmentTest {
         verify(optionsMenuHandler3).onDestroyOptionsMenu()
     }
 
+    @Test
+    fun `Given inflation handlers when onInflate then delegates to all handlers`() {
+        // Given
+        val inflationHandler1: InflationHandler = mock()
+        val inflationHandler2: InflationHandler = mock()
+        val inflationHandler3: InflationHandler = mock()
+
+        givenFragmentWithSetup { testFragment ->
+            testFragment.testInflationHandlers.addAll(
+                listOf(inflationHandler1, inflationHandler2, inflationHandler3)
+            )
+        }
+
+        val context = mock<Context>()
+        val attributes = mock<AttributeSet>()
+        val savedInstanceState = mock<Bundle>()
+
+        // When
+        cut.onInflate(context, attributes, savedInstanceState)
+
+        // Then
+        verify(inflationHandler1).onInflate(context, attributes, savedInstanceState)
+        verify(inflationHandler2).onInflate(context, attributes, savedInstanceState)
+        verify(inflationHandler3).onInflate(context, attributes, savedInstanceState)
+    }
+
     private fun givenFragmentWithSetup(setup: (TestFragment) -> Unit) {
         fragmentScenario = launchFragmentInContainer {
             cut = TestFragment().apply {
@@ -529,4 +558,8 @@ class TestFragment : SolidFragment() {
     val testOptionsMenuHandlers = mutableListOf<OptionsMenuHandler>()
     override val optionsMenuHandlers: List<OptionsMenuHandler>
         get() = testOptionsMenuHandlers
+
+    val testInflationHandlers = mutableListOf<InflationHandler>()
+    override val inflationHandlers: List<InflationHandler>
+        get() = testInflationHandlers
 }

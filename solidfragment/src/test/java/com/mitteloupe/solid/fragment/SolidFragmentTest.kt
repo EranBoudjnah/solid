@@ -23,6 +23,7 @@ import com.mitteloupe.solid.fragment.handler.AnimationHandler
 import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
 import com.mitteloupe.solid.fragment.handler.InflationHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
+import com.mitteloupe.solid.fragment.handler.MemoryHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
 import com.mitteloupe.solid.fragment.handler.WindowModeHandler
 import com.nhaarman.mockitokotlin2.any
@@ -707,6 +708,28 @@ class SolidFragmentTest {
         verify(activityForResultCallbackHandler3).onActivityResult(requestCode, responseCode, data)
     }
 
+    @Test
+    fun `Given memory handlers when onLowMemory then delegates to all handlers`() {
+        // Given
+        val memoryHandler1: MemoryHandler = mock()
+        val memoryHandler2: MemoryHandler = mock()
+        val memoryHandler3: MemoryHandler = mock()
+
+        givenFragmentWithSetup { testFragment ->
+            testFragment.testMemoryHandlers.addAll(
+                listOf(memoryHandler1, memoryHandler2, memoryHandler3)
+            )
+        }
+
+        // When
+        cut.onLowMemory()
+
+        // Then
+        verify(memoryHandler1).onLowMemory()
+        verify(memoryHandler2).onLowMemory()
+        verify(memoryHandler3).onLowMemory()
+    }
+
     private fun givenFragmentWithSetup(setup: (TestFragment) -> Unit) {
         fragmentScenario = launchFragmentInContainer {
             cut = TestFragment().apply {
@@ -745,4 +768,8 @@ class TestFragment : SolidFragment() {
     val testActivityForResultCallbackHandlers = mutableListOf<ActivityForResultCallbackHandler>()
     override val activityForResultCallbackHandlers: List<ActivityForResultCallbackHandler>
         get() = testActivityForResultCallbackHandlers
+
+    val testMemoryHandlers = mutableListOf<MemoryHandler>()
+    override val memoryHandlers: List<MemoryHandler>
+        get() = testMemoryHandlers
 }

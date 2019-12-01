@@ -24,12 +24,15 @@ import com.mitteloupe.solid.fragment.handler.LifecycleHandler
 import com.mitteloupe.solid.fragment.handler.MemoryHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
 import com.mitteloupe.solid.fragment.handler.PermissionHandler
+import com.mitteloupe.solid.fragment.handler.VisibilityHandler
 import com.mitteloupe.solid.fragment.handler.WindowModeHandler
 
 abstract class SolidFragment : Fragment() {
     open val lifecycleHandlers: List<LifecycleHandler> = emptyList()
 
     open val instanceStateHandlers: List<InstanceStateHandler> = emptyList()
+
+    open val visibilityHandlers: List<VisibilityHandler> = emptyList()
 
     open val contextMenuHandlers: List<ContextMenuHandler> = emptyList()
 
@@ -347,6 +350,18 @@ abstract class SolidFragment : Fragment() {
         } ?: super.onGetLayoutInflater(savedInstanceState)
 
     // endregion Layout inflater event function
+
+    // region Visibility event function
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+
+        visibilityHandlers.forEach { handler ->
+            handler.onHiddenChanged(hidden)
+        }
+    }
+
+    // endregion Visibility event function
 }
 
 private fun <HANDLER, RETURN_VALUE> List<HANDLER>.firstResultOrNull(

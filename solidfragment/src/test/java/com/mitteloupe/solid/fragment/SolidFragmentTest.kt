@@ -30,6 +30,7 @@ import com.mitteloupe.solid.fragment.handler.LifecycleHandler
 import com.mitteloupe.solid.fragment.handler.MemoryHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
 import com.mitteloupe.solid.fragment.handler.PermissionHandler
+import com.mitteloupe.solid.fragment.handler.VisibilityHandler
 import com.mitteloupe.solid.fragment.handler.WindowModeHandler
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.clearInvocations
@@ -842,6 +843,30 @@ class SolidFragmentTest {
         verify(layoutInflaterHandler3, never()).onGetLayoutInflater(any())
     }
 
+    @Test
+    fun `Given visibility handlers when onSaveInstanceState then delegates to all handlers`() {
+        // Given
+        val visibilityHandler1: VisibilityHandler = mock()
+        val visibilityHandler2: VisibilityHandler = mock()
+        val visibilityHandler3: VisibilityHandler = mock()
+
+        givenFragmentWithSetup { testFragment ->
+            testFragment.testVisibilityHandlers.addAll(
+                listOf(visibilityHandler1, visibilityHandler2, visibilityHandler3)
+            )
+        }
+
+        val hidden = true
+
+        // When
+        cut.onHiddenChanged(hidden)
+
+        // Then
+        verify(visibilityHandler1).onHiddenChanged(hidden)
+        verify(visibilityHandler2).onHiddenChanged(hidden)
+        verify(visibilityHandler3).onHiddenChanged(hidden)
+    }
+
     private fun givenFragmentWithSetup(setup: (TestFragment) -> Unit) {
         fragmentScenario = launchFragmentInContainer {
             cut = TestFragment().apply {
@@ -856,6 +881,14 @@ class TestFragment : SolidFragment() {
     val testLifecycleHandlers = mutableListOf<LifecycleHandler>()
     override val lifecycleHandlers: List<LifecycleHandler>
         get() = testLifecycleHandlers
+
+    val testInstanceStateHandlers = mutableListOf<InstanceStateHandler>()
+    override val instanceStateHandlers: List<InstanceStateHandler>
+        get() = testInstanceStateHandlers
+
+    val testVisibilityHandlers = mutableListOf<VisibilityHandler>()
+    override val visibilityHandlers: List<VisibilityHandler>
+        get() = testVisibilityHandlers
 
     val testContextMenuHandlers = mutableListOf<ContextMenuHandler>()
     override val contextMenuHandlers: List<ContextMenuHandler>
@@ -892,10 +925,6 @@ class TestFragment : SolidFragment() {
     val testChildFragmentHandlers = mutableListOf<ChildFragmentHandler>()
     override val childFragmentHandlers: List<ChildFragmentHandler>
         get() = testChildFragmentHandlers
-
-    val testInstanceStateHandlers = mutableListOf<InstanceStateHandler>()
-    override val instanceStateHandlers: List<InstanceStateHandler>
-        get() = testInstanceStateHandlers
 
     val testLayoutInflaterHandlers = mutableListOf<LayoutInflaterHandler>()
     override val layoutInflaterHandlers: List<LayoutInflaterHandler>

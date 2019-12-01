@@ -1,0 +1,82 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+android {
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    compileSdkVersion 28
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.1.0'
+
+    testImplementation 'junit:junit:4.12'
+
+    testImplementation 'androidx.test:core-ktx:1.2.0'
+    testImplementation 'androidx.test.ext:junit:1.1.1'
+    testImplementation 'androidx.test.ext:junit-ktx:1.1.1'
+    testImplementation 'androidx.fragment:fragment-testing:1.1.0'
+
+    testImplementation 'org.mockito:mockito-core:2.28.2'
+    testImplementation 'org.mockito:mockito-inline:2.28.2'
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
+
+    testImplementation 'org.hamcrest:hamcrest:2.2'
+
+    testImplementation ('org.robolectric:robolectric:4.3') {
+        exclude group: 'org.apache.maven', module: 'maven-artifact'
+        exclude group: 'org.apache.maven', module: 'maven-artifact-manager'
+        exclude group: 'org.apache.maven', module: 'maven-model'
+        exclude group: 'org.apache.maven', module: 'maven-plugin-registry'
+        exclude group: 'org.apache.maven', module: 'maven-project'
+        exclude group: 'org.apache.maven', module: 'maven-profile'
+        exclude group: 'org.apache.maven', module: 'maven-settings'
+        exclude group: 'org.apache.maven', module: 'maven-error-diagnostics'
+        exclude group: "org.apache.maven.wagon"
+        exclude group: "org.codehaus.plexus"
+        exclude group: "classworlds"
+    }
+}
+
+ext {
+    set("PUBLISH_GROUP_ID", "com.mitteloupe.solid")
+    set("PUBLISH_ARTIFACT_ID", "solidfragment")
+    set("PUBLISH_VERSION", "1.0.3")
+}
+
+apply {
+    from("../release-jar.gradle")
+}

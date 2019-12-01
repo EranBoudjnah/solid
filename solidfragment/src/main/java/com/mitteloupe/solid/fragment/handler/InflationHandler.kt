@@ -9,5 +9,5 @@ interface InflationHandler {
     /**
      * @see Fragment.onInflate
      */
-    fun onInflate(context: Context, attrs: AttributeSet, savedInstanceState: Bundle?) = Unit
+    fun onInflate(context: Context, attrs: AttributeSet, savedInstanceState: Bundle?)
 }

@@ -25,7 +25,6 @@ class MainActivity : SolidActivity() {
         supportFragmentManager.commit {
             replace(R.id.main_fragment_container, getFragmentInstance())
         }
-
     }
 
     private fun getFragmentInstance(): Fragment {

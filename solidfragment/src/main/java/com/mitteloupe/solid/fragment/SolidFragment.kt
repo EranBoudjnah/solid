@@ -18,6 +18,7 @@ import com.mitteloupe.solid.fragment.handler.AnimationHandler
 import com.mitteloupe.solid.fragment.handler.ChildFragmentHandler
 import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
 import com.mitteloupe.solid.fragment.handler.InflationHandler
+import com.mitteloupe.solid.fragment.handler.InstanceStateHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
 import com.mitteloupe.solid.fragment.handler.MemoryHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
@@ -26,6 +27,8 @@ import com.mitteloupe.solid.fragment.handler.WindowModeHandler
 
 abstract class SolidFragment : Fragment() {
     open val lifecycleHandlers: List<LifecycleHandler> = emptyList()
+
+    open val instanceStateHandlers: List<InstanceStateHandler> = emptyList()
 
     open val contextMenuHandlers: List<ContextMenuHandler> = emptyList()
 
@@ -320,6 +323,18 @@ abstract class SolidFragment : Fragment() {
     }
 
     // endregion Permission event function
+
+    // region Instance state event function
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        instanceStateHandlers.forEach { handler ->
+            handler.onSaveInstanceState(outState)
+        }
+    }
+
+    // endregion Instance state event function
 }
 
 private fun <HANDLER, RETURN_VALUE> List<HANDLER>.firstResultOrNull(

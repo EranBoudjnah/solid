@@ -24,6 +24,7 @@ import com.mitteloupe.solid.fragment.handler.AnimationHandler
 import com.mitteloupe.solid.fragment.handler.ChildFragmentHandler
 import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
 import com.mitteloupe.solid.fragment.handler.InflationHandler
+import com.mitteloupe.solid.fragment.handler.InstanceStateHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
 import com.mitteloupe.solid.fragment.handler.MemoryHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
@@ -778,21 +779,36 @@ class SolidFragmentTest {
         cut.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         // Then
-        verify(permissionHandler1).onRequestPermissionsResult(
-            requestCode,
-            permissions,
-            grantResults
-        )
-        verify(permissionHandler2).onRequestPermissionsResult(
-            requestCode,
-            permissions,
-            grantResults
-        )
-        verify(permissionHandler3).onRequestPermissionsResult(
-            requestCode,
-            permissions,
-            grantResults
-        )
+        verify(permissionHandler1)
+            .onRequestPermissionsResult(requestCode, permissions, grantResults)
+        verify(permissionHandler2)
+            .onRequestPermissionsResult(requestCode, permissions, grantResults)
+        verify(permissionHandler3)
+            .onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    @Test
+    fun `Given instance state handlers when onSaveInstanceState then delegates to all handlers`() {
+        // Given
+        val instanceStateHandler1: InstanceStateHandler = mock()
+        val instanceStateHandler2: InstanceStateHandler = mock()
+        val instanceStateHandler3: InstanceStateHandler = mock()
+
+        givenFragmentWithSetup { testFragment ->
+            testFragment.testInstanceStateHandlers.addAll(
+                listOf(instanceStateHandler1, instanceStateHandler2, instanceStateHandler3)
+            )
+        }
+
+        val outState = mock<Bundle>()
+
+        // When
+        cut.onSaveInstanceState(outState)
+
+        // Then
+        verify(instanceStateHandler1).onSaveInstanceState(outState)
+        verify(instanceStateHandler1).onSaveInstanceState(outState)
+        verify(instanceStateHandler1).onSaveInstanceState(outState)
     }
 
     private fun givenFragmentWithSetup(setup: (TestFragment) -> Unit) {
@@ -845,4 +861,8 @@ class TestFragment : SolidFragment() {
     val testChildFragmentHandlers = mutableListOf<ChildFragmentHandler>()
     override val childFragmentHandlers: List<ChildFragmentHandler>
         get() = testChildFragmentHandlers
+
+    val testInstanceStateHandlers = mutableListOf<InstanceStateHandler>()
+    override val instanceStateHandlers: List<InstanceStateHandler>
+        get() = testInstanceStateHandlers
 }

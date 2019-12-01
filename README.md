@@ -1,6 +1,7 @@
 # SOLID Components
 
 [![Version](https://img.shields.io/bintray/v/shadowcra/Solid/com.mittelouple.solid.activity?label=activity+|+bintray)](https://bintray.com/shadowcra/Solid/com.mittelouple.solid.activity)
+[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/com.mittelouple.solid.fragment?label=fragment+|+bintray)](https://bintray.com/shadowcra/Solid/com.mittelouple.solid.fragmeent)
 [![Version](https://img.shields.io/bintray/v/shadowcra/Solid/com.mittelouple.solid.recyclerview?label=recyclerview+|+bintray)](https://bintray.com/shadowcra/Solid/com.mittelouple.solid.recyclerview)
 
 [![Build Status](https://img.shields.io/travis/EranBoudjnah/Solid)](https://travis-ci.com/EranBoudjnah/Solid)
@@ -27,7 +28,8 @@ And then the implementation.
 
 ```groovy
 dependencies {
-    implementation "com.mitteloupe.solid:solidactivity:1.0.3"
+    implementation "com.mitteloupe.solid:solidactivity:1.0.4"
+    implementation "com.mitteloupe.solid:solidfragment:1.0.4"
     implementation "com.mitteloupe.solid:solidrecyclerview:1.0.2"
 }
 ```

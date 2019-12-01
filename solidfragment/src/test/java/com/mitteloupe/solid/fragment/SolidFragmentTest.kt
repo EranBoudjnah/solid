@@ -14,12 +14,14 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mitteloupe.solid.fragment.handler.ActivityForResultCallbackHandler
 import com.mitteloupe.solid.fragment.handler.AnimationHandler
+import com.mitteloupe.solid.fragment.handler.ChildFragmentHandler
 import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
 import com.mitteloupe.solid.fragment.handler.InflationHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
@@ -730,6 +732,30 @@ class SolidFragmentTest {
         verify(memoryHandler3).onLowMemory()
     }
 
+    @Test
+    fun `Given child fragment handlers when onAttachFragment then delegates to all handlers`() {
+        // Given
+        val childFragmentHandler1: ChildFragmentHandler = mock()
+        val childFragmentHandler2: ChildFragmentHandler = mock()
+        val childFragmentHandler3: ChildFragmentHandler = mock()
+
+        givenFragmentWithSetup { testFragment ->
+            testFragment.testChildFragmentHandlers.addAll(
+                listOf(childFragmentHandler1, childFragmentHandler2, childFragmentHandler3)
+            )
+        }
+
+        val childFragment = mock<Fragment>()
+
+        // When
+        cut.onAttachFragment(childFragment)
+
+        // Then
+        verify(childFragmentHandler1).onAttachFragment(childFragment)
+        verify(childFragmentHandler2).onAttachFragment(childFragment)
+        verify(childFragmentHandler3).onAttachFragment(childFragment)
+    }
+
     private fun givenFragmentWithSetup(setup: (TestFragment) -> Unit) {
         fragmentScenario = launchFragmentInContainer {
             cut = TestFragment().apply {
@@ -772,4 +798,8 @@ class TestFragment : SolidFragment() {
     val testMemoryHandlers = mutableListOf<MemoryHandler>()
     override val memoryHandlers: List<MemoryHandler>
         get() = testMemoryHandlers
+
+    val testChildFragmentHandlers = mutableListOf<ChildFragmentHandler>()
+    override val childFragmentHandlers: List<ChildFragmentHandler>
+        get() = testChildFragmentHandlers
 }

@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.mitteloupe.solid.fragment.handler.ActivityForResultCallbackHandler
 import com.mitteloupe.solid.fragment.handler.AnimationHandler
+import com.mitteloupe.solid.fragment.handler.ChildFragmentHandler
 import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
 import com.mitteloupe.solid.fragment.handler.InflationHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
@@ -38,6 +39,8 @@ abstract class SolidFragment : Fragment() {
     open val activityForResultCallbackHandlers: List<ActivityForResultCallbackHandler> = emptyList()
 
     open val memoryHandlers: List<MemoryHandler> = emptyList()
+
+    open val childFragmentHandlers: List<ChildFragmentHandler> = emptyList()
 
     // region Lifecycle event functions
 
@@ -286,6 +289,18 @@ abstract class SolidFragment : Fragment() {
     }
 
     // endregion Memory event function
+
+    // region Child fragment event function
+
+    override fun onAttachFragment(childFragment: Fragment) {
+        super.onAttachFragment(childFragment)
+
+        childFragmentHandlers.forEach { handler ->
+            handler.onAttachFragment(childFragment)
+        }
+    }
+
+    // endregion Child fragment event function
 }
 
 private fun <HANDLER, RETURN_VALUE> List<HANDLER>.firstResultOrNull(

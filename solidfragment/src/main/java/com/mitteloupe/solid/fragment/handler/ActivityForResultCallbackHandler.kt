@@ -7,5 +7,5 @@ interface ActivityForResultCallbackHandler {
     /**
      * @see Fragment.onActivityResult
      */
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) = Unit
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 }

@@ -22,6 +22,7 @@ import com.mitteloupe.solid.fragment.handler.InstanceStateHandler
 import com.mitteloupe.solid.fragment.handler.LayoutInflaterHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
 import com.mitteloupe.solid.fragment.handler.MemoryHandler
+import com.mitteloupe.solid.fragment.handler.NavigationHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
 import com.mitteloupe.solid.fragment.handler.PermissionHandler
 import com.mitteloupe.solid.fragment.handler.VisibilityHandler
@@ -53,6 +54,8 @@ abstract class SolidFragment : Fragment() {
     open val childFragmentHandlers: List<ChildFragmentHandler> = emptyList()
 
     open val layoutInflaterHandlers: List<LayoutInflaterHandler> = emptyList()
+
+    open val navigationHandlers: List<NavigationHandler> = emptyList()
 
     // region Lifecycle event functions
 
@@ -362,6 +365,18 @@ abstract class SolidFragment : Fragment() {
     }
 
     // endregion Visibility event function
+
+    // region Navigation event function
+
+    override fun onPrimaryNavigationFragmentChanged(isPrimaryNavigationFragment: Boolean) {
+        super.onPrimaryNavigationFragmentChanged(isPrimaryNavigationFragment)
+
+        navigationHandlers.forEach { handler ->
+            handler.onPrimaryNavigationFragmentChanged(isPrimaryNavigationFragment)
+        }
+    }
+
+    // endregion Navigation event function
 }
 
 private fun <HANDLER, RETURN_VALUE> List<HANDLER>.firstResultOrNull(

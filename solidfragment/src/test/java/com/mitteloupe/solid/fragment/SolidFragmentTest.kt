@@ -28,6 +28,7 @@ import com.mitteloupe.solid.fragment.handler.InstanceStateHandler
 import com.mitteloupe.solid.fragment.handler.LayoutInflaterHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
 import com.mitteloupe.solid.fragment.handler.MemoryHandler
+import com.mitteloupe.solid.fragment.handler.NavigationHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
 import com.mitteloupe.solid.fragment.handler.PermissionHandler
 import com.mitteloupe.solid.fragment.handler.VisibilityHandler
@@ -867,6 +868,30 @@ class SolidFragmentTest {
         verify(visibilityHandler3).onHiddenChanged(hidden)
     }
 
+    @Test
+    fun `Given navigation handlers when onPrimaryNavigationFragmentChanged then delegates to all handlers`() {
+        // Given
+        val navigationHandler1: NavigationHandler = mock()
+        val navigationHandler2: NavigationHandler = mock()
+        val navigationHandler3: NavigationHandler = mock()
+
+        givenFragmentWithSetup { testFragment ->
+            testFragment.testNavigationHandlers.addAll(
+                listOf(navigationHandler1, navigationHandler2, navigationHandler3)
+            )
+        }
+
+        val isPrimaryNavigationFragment = true
+
+        // When
+        cut.onPrimaryNavigationFragmentChanged(isPrimaryNavigationFragment)
+
+        // Then
+        verify(navigationHandler1).onPrimaryNavigationFragmentChanged(isPrimaryNavigationFragment)
+        verify(navigationHandler2).onPrimaryNavigationFragmentChanged(isPrimaryNavigationFragment)
+        verify(navigationHandler3).onPrimaryNavigationFragmentChanged(isPrimaryNavigationFragment)
+    }
+
     private fun givenFragmentWithSetup(setup: (TestFragment) -> Unit) {
         fragmentScenario = launchFragmentInContainer {
             cut = TestFragment().apply {
@@ -929,4 +954,8 @@ class TestFragment : SolidFragment() {
     val testLayoutInflaterHandlers = mutableListOf<LayoutInflaterHandler>()
     override val layoutInflaterHandlers: List<LayoutInflaterHandler>
         get() = testLayoutInflaterHandlers
+
+    val testNavigationHandlers = mutableListOf<NavigationHandler>()
+    override val navigationHandlers: List<NavigationHandler>
+        get() = testNavigationHandlers
 }

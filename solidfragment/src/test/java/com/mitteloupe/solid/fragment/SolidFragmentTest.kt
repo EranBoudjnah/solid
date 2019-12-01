@@ -27,6 +27,7 @@ import com.mitteloupe.solid.fragment.handler.InflationHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
 import com.mitteloupe.solid.fragment.handler.MemoryHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
+import com.mitteloupe.solid.fragment.handler.PermissionHandler
 import com.mitteloupe.solid.fragment.handler.WindowModeHandler
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.clearInvocations
@@ -756,6 +757,44 @@ class SolidFragmentTest {
         verify(childFragmentHandler3).onAttachFragment(childFragment)
     }
 
+    @Test
+    fun `Given permission handlers when onRequestPermissionsResult then delegates to all handlers`() {
+        // Given
+        val permissionHandler1: PermissionHandler = mock()
+        val permissionHandler2: PermissionHandler = mock()
+        val permissionHandler3: PermissionHandler = mock()
+
+        givenFragmentWithSetup { testFragment ->
+            testFragment.testPermissionHandlers.addAll(
+                listOf(permissionHandler1, permissionHandler2, permissionHandler3)
+            )
+        }
+
+        val requestCode = 0xF00D
+        val permissions = emptyArray<String>()
+        val grantResults = intArrayOf()
+
+        // When
+        cut.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        // Then
+        verify(permissionHandler1).onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults
+        )
+        verify(permissionHandler2).onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults
+        )
+        verify(permissionHandler3).onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults
+        )
+    }
+
     private fun givenFragmentWithSetup(setup: (TestFragment) -> Unit) {
         fragmentScenario = launchFragmentInContainer {
             cut = TestFragment().apply {
@@ -794,6 +833,10 @@ class TestFragment : SolidFragment() {
     val testActivityForResultCallbackHandlers = mutableListOf<ActivityForResultCallbackHandler>()
     override val activityForResultCallbackHandlers: List<ActivityForResultCallbackHandler>
         get() = testActivityForResultCallbackHandlers
+
+    val testPermissionHandlers = mutableListOf<PermissionHandler>()
+    override val permissionHandlers: List<PermissionHandler>
+        get() = testPermissionHandlers
 
     val testMemoryHandlers = mutableListOf<MemoryHandler>()
     override val memoryHandlers: List<MemoryHandler>

@@ -21,6 +21,7 @@ import com.mitteloupe.solid.fragment.handler.InflationHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
 import com.mitteloupe.solid.fragment.handler.MemoryHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
+import com.mitteloupe.solid.fragment.handler.PermissionHandler
 import com.mitteloupe.solid.fragment.handler.WindowModeHandler
 
 abstract class SolidFragment : Fragment() {
@@ -37,6 +38,8 @@ abstract class SolidFragment : Fragment() {
     open val windowModeHandlers: List<WindowModeHandler> = emptyList()
 
     open val activityForResultCallbackHandlers: List<ActivityForResultCallbackHandler> = emptyList()
+
+    open val permissionHandlers: List<PermissionHandler> = emptyList()
 
     open val memoryHandlers: List<MemoryHandler> = emptyList()
 
@@ -301,6 +304,22 @@ abstract class SolidFragment : Fragment() {
     }
 
     // endregion Child fragment event function
+
+    // region Permission event function
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        permissionHandlers.forEach { handler ->
+            handler.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
+
+    // endregion Permission event function
 }
 
 private fun <HANDLER, RETURN_VALUE> List<HANDLER>.firstResultOrNull(

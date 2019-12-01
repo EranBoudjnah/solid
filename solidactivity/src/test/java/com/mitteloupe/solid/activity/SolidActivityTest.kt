@@ -1481,6 +1481,33 @@ class SolidActivityTest {
     }
 
     @Test
+    fun `Given context menu handlers when onContextItemSelected then delegates to handlers until consumed`() {
+        // Given
+        val contextMenuHandler1: ContextMenuHandler = mock()
+
+        val item = mock<MenuItem>()
+        val contextMenuHandler2: ContextMenuHandler = mock {
+            on { onContextItemSelected(item) }.thenReturn(true)
+        }
+
+        val contextMenuHandler3: ContextMenuHandler = mock()
+
+        val activity = cutController.get()
+        activity.testContextMenuHandlers.addAll(
+            listOf(contextMenuHandler1, contextMenuHandler2, contextMenuHandler3)
+        )
+
+        // When
+        val actualValue = activity.onContextItemSelected(item)
+
+        // Then
+        assertTrue(actualValue)
+        verify(contextMenuHandler1).onContextItemSelected(item)
+        verify(contextMenuHandler2).onContextItemSelected(item)
+        verify(contextMenuHandler3, never()).onContextItemSelected(any())
+    }
+
+    @Test
     fun `Given context menu handlers when onContextMenuClosed then delegates to handlers`() {
         // Given
         val contextMenuHandler1: ContextMenuHandler = mock()

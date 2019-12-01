@@ -2,6 +2,7 @@
 
 [![Version](https://img.shields.io/bintray/v/shadowcra/Solid/com.mittelouple.solid.activity?label=activity+|+bintray)](https://bintray.com/shadowcra/Solid/com.mittelouple.solid.activity)
 [![Version](https://img.shields.io/bintray/v/shadowcra/Solid/com.mittelouple.solid.fragment?label=fragment+|+bintray)](https://bintray.com/shadowcra/Solid/com.mittelouple.solid.fragmeent)
+
 [![Version](https://img.shields.io/bintray/v/shadowcra/Solid/com.mittelouple.solid.recyclerview?label=recyclerview+|+bintray)](https://bintray.com/shadowcra/Solid/com.mittelouple.solid.recyclerview)
 
 [![Build Status](https://img.shields.io/travis/EranBoudjnah/Solid)](https://travis-ci.com/EranBoudjnah/Solid)
@@ -39,7 +40,7 @@ dependencies {
 
 ### Activity
 
-Use `SolidActivity` as the parent activity of any activity in your app. Instead of having a BaseActivity, you can now provide common activity code by overriding one or more of the handler lists, providing a list of handlers.
+Use `SolidActivity` as the parent activity of any activity in your app. Instead of having a *BaseActivity*, you can now provide common activity code by overriding one or more of the handler lists, providing a list of handlers.
 
 Common use cases can include dependency injection, analytics, logging, setting up of ViewHolders. 
 
@@ -62,6 +63,38 @@ Implement an activity using the handler as follows:
 class MainActivity : SolidActivity() {
     override val lifecycleHandlers = listOf(
         KoinActivityScopeHandler(this, currentScope),
+        ...
+    )
+
+    ...
+}
+```
+
+### Fragment
+
+Use `SolidFragment` as the parent fragment of any fragment in your app. Instead of having a *BaseFragment*, you can now provide common fragment code by overriding one or more of the handler lists, providing a list of handlers.
+
+Common use cases can include dependency injection, analytics, logging, setting up of ViewHolders. 
+
+A `Koin` injection handler will look as follows:
+
+```kotlin
+class KoinFragmentScopeHandler(
+    private val fragment: Fragment,
+    private val currentScope: Scope
+) : LifecycleHandler {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        currentScope.declare(fragment)
+    }
+}
+```
+
+Implement an fragment using the handler as follows:
+
+```kotlin
+class MainFragment : SolidFragment() {
+    override val lifecycleHandlers = listOf(
+        KoinFragmentScopeHandler(this, currentScope),
         ...
     )
 

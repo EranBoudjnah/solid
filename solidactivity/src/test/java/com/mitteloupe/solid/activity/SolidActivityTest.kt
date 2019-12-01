@@ -1472,9 +1472,10 @@ class SolidActivityTest {
         val item = mock<MenuItem>()
 
         // When
-        activity.onContextItemSelected(item)
+        val actualValue = activity.onContextItemSelected(item)
 
         // Then
+        assertFalse(actualValue)
         verify(contextMenuHandler1).onContextItemSelected(item)
         verify(contextMenuHandler2).onContextItemSelected(item)
         verify(contextMenuHandler3).onContextItemSelected(item)
@@ -1557,7 +1558,7 @@ class SolidActivityTest {
         // Then
         verify(optionsMenuHandler1).onPrepareOptionsMenu(menu)
         verify(optionsMenuHandler2).onPrepareOptionsMenu(menu)
-        verify(optionsMenuHandler3, never()).onPrepareOptionsMenu(menu)
+        verify(optionsMenuHandler3, never()).onPrepareOptionsMenu(any())
     }
 
     @Test
@@ -1587,7 +1588,7 @@ class SolidActivityTest {
         // Then
         verify(optionsMenuHandler1).onCreateOptionsMenu(menu)
         verify(optionsMenuHandler2).onCreateOptionsMenu(menu)
-        verify(optionsMenuHandler3, never()).onCreateOptionsMenu(menu)
+        verify(optionsMenuHandler3, never()).onCreateOptionsMenu(any())
     }
 
     @Test
@@ -1617,7 +1618,7 @@ class SolidActivityTest {
         // Then
         verify(optionsMenuHandler1).onOptionsItemSelected(item)
         verify(optionsMenuHandler2).onOptionsItemSelected(item)
-        verify(optionsMenuHandler3, never()).onOptionsItemSelected(item)
+        verify(optionsMenuHandler3, never()).onOptionsItemSelected(any())
     }
 
     @Test

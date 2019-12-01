@@ -25,6 +25,7 @@ import com.mitteloupe.solid.fragment.handler.ChildFragmentHandler
 import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
 import com.mitteloupe.solid.fragment.handler.InflationHandler
 import com.mitteloupe.solid.fragment.handler.InstanceStateHandler
+import com.mitteloupe.solid.fragment.handler.LayoutInflaterHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
 import com.mitteloupe.solid.fragment.handler.MemoryHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
@@ -811,6 +812,36 @@ class SolidFragmentTest {
         verify(instanceStateHandler1).onSaveInstanceState(outState)
     }
 
+    @Test
+    fun `Given layout inflater handlers when onSaveInstanceState then delegates to handlers until value returned`() {
+        // Given
+        val layoutInflaterHandler1: LayoutInflaterHandler = mock()
+
+        val savedInstanceState = mock<Bundle>()
+        val expectedInflater = mock<LayoutInflater>()
+        val layoutInflaterHandler2: LayoutInflaterHandler = mock {
+            on { onGetLayoutInflater(savedInstanceState) }
+                .thenReturn(expectedInflater)
+        }
+
+        val layoutInflaterHandler3: LayoutInflaterHandler = mock()
+
+        givenFragmentWithSetup { testFragment ->
+            testFragment.testLayoutInflaterHandlers.addAll(
+                listOf(layoutInflaterHandler1, layoutInflaterHandler2, layoutInflaterHandler3)
+            )
+        }
+
+        // When
+        val actualValue = cut.onGetLayoutInflater(savedInstanceState)
+
+        // Then
+        assertEquals(expectedInflater, actualValue)
+        verify(layoutInflaterHandler1).onGetLayoutInflater(savedInstanceState)
+        verify(layoutInflaterHandler2).onGetLayoutInflater(savedInstanceState)
+        verify(layoutInflaterHandler3, never()).onGetLayoutInflater(any())
+    }
+
     private fun givenFragmentWithSetup(setup: (TestFragment) -> Unit) {
         fragmentScenario = launchFragmentInContainer {
             cut = TestFragment().apply {
@@ -865,4 +896,8 @@ class TestFragment : SolidFragment() {
     val testInstanceStateHandlers = mutableListOf<InstanceStateHandler>()
     override val instanceStateHandlers: List<InstanceStateHandler>
         get() = testInstanceStateHandlers
+
+    val testLayoutInflaterHandlers = mutableListOf<LayoutInflaterHandler>()
+    override val layoutInflaterHandlers: List<LayoutInflaterHandler>
+        get() = testLayoutInflaterHandlers
 }

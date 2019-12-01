@@ -19,6 +19,7 @@ import com.mitteloupe.solid.fragment.handler.ChildFragmentHandler
 import com.mitteloupe.solid.fragment.handler.ContextMenuHandler
 import com.mitteloupe.solid.fragment.handler.InflationHandler
 import com.mitteloupe.solid.fragment.handler.InstanceStateHandler
+import com.mitteloupe.solid.fragment.handler.LayoutInflaterHandler
 import com.mitteloupe.solid.fragment.handler.LifecycleHandler
 import com.mitteloupe.solid.fragment.handler.MemoryHandler
 import com.mitteloupe.solid.fragment.handler.OptionsMenuHandler
@@ -47,6 +48,8 @@ abstract class SolidFragment : Fragment() {
     open val memoryHandlers: List<MemoryHandler> = emptyList()
 
     open val childFragmentHandlers: List<ChildFragmentHandler> = emptyList()
+
+    open val layoutInflaterHandlers: List<LayoutInflaterHandler> = emptyList()
 
     // region Lifecycle event functions
 
@@ -335,6 +338,15 @@ abstract class SolidFragment : Fragment() {
     }
 
     // endregion Instance state event function
+
+    // region Layout inflater event function
+
+    override fun onGetLayoutInflater(savedInstanceState: Bundle?) =
+        layoutInflaterHandlers.firstResultOrNull { handler ->
+            handler.onGetLayoutInflater(savedInstanceState)
+        } ?: super.onGetLayoutInflater(savedInstanceState)
+
+    // endregion Layout inflater event function
 }
 
 private fun <HANDLER, RETURN_VALUE> List<HANDLER>.firstResultOrNull(

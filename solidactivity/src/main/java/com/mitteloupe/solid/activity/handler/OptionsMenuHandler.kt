@@ -18,10 +18,10 @@ interface OptionsMenuHandler {
     /**
      * @see Activity.onOptionsItemSelected
      */
-    fun onOptionsItemSelected(item: MenuItem?) = false
+    fun onOptionsItemSelected(item: MenuItem) = false
 
     /**
      * @see Activity.onOptionsMenuClosed
      */
-    fun onOptionsMenuClosed(menu: Menu?) = Unit
+    fun onOptionsMenuClosed(menu: Menu) = Unit
 }

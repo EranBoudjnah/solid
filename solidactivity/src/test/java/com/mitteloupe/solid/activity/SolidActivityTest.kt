@@ -1654,6 +1654,32 @@ class SolidActivityTest {
     fun `Given menu opened handlers when onMenuOpened then delegates to handlers until intercepted`() {
         // Given
         val featureId = 321
+        val menuOpenedHandler1: MenuOpenedHandler = mock {
+            on { onMenuOpening(featureId) }.thenReturn(true)
+        }
+
+        val menuOpenedHandler2: MenuOpenedHandler = mock()
+        val menuOpenedHandler3: MenuOpenedHandler = mock()
+
+        val activity = cutController.get()
+        activity.testMenuOpenedHandlers.addAll(
+            listOf(menuOpenedHandler1, menuOpenedHandler2, menuOpenedHandler3)
+        )
+
+        // When
+        val actualValue = activity.onMenuOpened(featureId, null)
+
+        // Then
+        verify(menuOpenedHandler1).onMenuOpening(featureId)
+        verify(menuOpenedHandler2).onMenuOpening(featureId)
+        verify(menuOpenedHandler3, never()).onMenuOpening(featureId)
+        assertFalse(actualValue)
+    }
+
+    @Test
+    fun `Given menu opened handlers and menu when onMenuOpened then delegates to handlers until intercepted`() {
+        // Given
+        val featureId = 321
         val menu = mock<Menu>()
         val menuOpenedHandler1: MenuOpenedHandler = mock {
             on { onMenuOpened(featureId, menu) }.thenReturn(true)

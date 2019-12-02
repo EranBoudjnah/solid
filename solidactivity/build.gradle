@@ -46,6 +46,9 @@ dependencies {
     // Required for DrawerHandler
     compileOnly 'com.google.android.material:material:1.0.0'
 
+    // Required for FragmentHandler
+    compileOnly 'androidx.fragment:fragment-ktx:1.1.0'
+
     testImplementation 'junit:junit:4.12'
 
     testImplementation 'androidx.test:core-ktx:1.2.0'

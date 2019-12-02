@@ -43,6 +43,9 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
 
+    // Required for DrawerHandler
+    compileOnly 'com.google.android.material:material:1.0.0'
+
     testImplementation 'junit:junit:4.12'
 
     testImplementation 'androidx.test:core-ktx:1.2.0'
@@ -55,7 +58,7 @@ dependencies {
 
     testImplementation 'org.hamcrest:hamcrest:2.2'
 
-    testImplementation ('org.robolectric:robolectric:4.3') {
+    testImplementation('org.robolectric:robolectric:4.3') {
         exclude group: 'org.apache.maven', module: 'maven-artifact'
         exclude group: 'org.apache.maven', module: 'maven-artifact-manager'
         exclude group: 'org.apache.maven', module: 'maven-model'

@@ -3,7 +3,8 @@
 [![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidApplication?label=application+|+bintray)](https://bintray.com/shadowcra/Solid/SolidApplication)
 
 [![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidActivity?label=activity+|+bintray)](https://bintray.com/shadowcra/Solid/SolidActivity)
-[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidFragment?label=fragment+|+bintray)](https://bintray.com/shadowcra/Solid/SolidFragmeent)
+[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidFragment?label=fragment+|+bintray)](https://bintray.com/shadowcra/Solid/SolidFragment)
+[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidService?label=service+|+bintray)](https://bintray.com/shadowcra/Solid/SolidService)
 
 [![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidRecyclerView?label=recyclerview+|+bintray)](https://bintray.com/shadowcra/Solid/SolidRecyclerView)
 
@@ -32,8 +33,11 @@ And then the implementation.
 ```groovy
 dependencies {
     implementation "com.mitteloupe.solid:solidapplication:1.0.5"
+
     implementation "com.mitteloupe.solid:solidactivity:1.0.5"
     implementation "com.mitteloupe.solid:solidfragment:1.0.4"
+    implementation "com.mitteloupe.solid:solidservice:1.0.5"
+
     implementation "com.mitteloupe.solid:solidrecyclerview:1.0.2"
 }
 ```
@@ -108,6 +112,24 @@ class MainFragment : SolidFragment() {
     )
 
     ...
+}
+```
+
+### Service
+
+`SolidService` allows composing services instead of inheriting from base services.
+
+As an example, an `IntentService` using `SolidService` would look like this:
+
+```kotlin
+class SolidIntentService : SolidService() {
+    override val lifecycleHandlers = listOf(
+        IntentHandler(this, { intent -> handleIntent(intent) })
+    )
+
+    private fun handleIntent(intent: Intent?) {
+        ...
+    }
 }
 ```
 

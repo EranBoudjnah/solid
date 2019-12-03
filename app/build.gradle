@@ -43,8 +43,11 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
 
     implementation "com.mitteloupe.solid:solidapplication:1.0.5"
+
     implementation "com.mitteloupe.solid:solidactivity:1.0.5"
     implementation "com.mitteloupe.solid:solidfragment:1.0.4"
+    implementation project(path: ':solidservice')
+
     implementation "com.mitteloupe.solid:solidrecyclerview:1.0.2"
 
     implementation 'org.koin:koin-android:2.0.1'

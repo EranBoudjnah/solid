@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".service.SolidIntentService" />
     </application>
 
 </manifest>

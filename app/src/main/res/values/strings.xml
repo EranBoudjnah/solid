@@ -3,5 +3,7 @@
     <string name="main_title">Solid Components Example</string>
     <string name="menu_item_example_1">Example 1</string>
     <string name="menu_item_example_2">Example 2</string>
+    <string name="intent_service_example_1">Input message 1</string>
+    <string name="intent_service_example_2">Input message 2</string>
     <string name="navigation_header_title">Solid Example</string>
 </resources>

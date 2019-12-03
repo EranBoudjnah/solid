@@ -1,2 +1,2 @@
-include ':app', ':solidactivity', ':solidfragment', ':solidrecyclerview'
+include ':app', ':solidapplication', ':solidactivity', ':solidfragment', ':solidrecyclerview'
 rootProject.name='SolidComponents'

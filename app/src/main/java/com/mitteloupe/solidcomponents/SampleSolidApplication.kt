@@ -1,19 +1,10 @@
 package com.mitteloupe.solidcomponents
 
-import android.app.Application
-import com.mitteloupe.solidcomponents.di.appModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
+import com.mitteloupe.solid.application.SolidApplication
+import com.mitteloupe.solidcomponents.hander.KoinApplicationScopeHandler
 
-class SampleSolidApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-
-        startKoin {
-            androidLogger()
-            androidContext(this@SampleSolidApplication)
-            modules(appModule)
-        }
-    }
+class SampleSolidApplication : SolidApplication() {
+    override val lifecycleHandlers = listOf(
+        KoinApplicationScopeHandler(this)
+    )
 }

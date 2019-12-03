@@ -1,9 +1,11 @@
 # SOLID Components
 
-[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/com.mittelouple.solid.activity?label=activity+|+bintray)](https://bintray.com/shadowcra/Solid/com.mittelouple.solid.activity)
-[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/com.mittelouple.solid.fragment?label=fragment+|+bintray)](https://bintray.com/shadowcra/Solid/com.mittelouple.solid.fragmeent)
+[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidApplication?label=application+|+bintray)](https://bintray.com/shadowcra/Solid/SolidApplication)
 
-[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/com.mittelouple.solid.recyclerview?label=recyclerview+|+bintray)](https://bintray.com/shadowcra/Solid/com.mittelouple.solid.recyclerview)
+[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidActivity?label=activity+|+bintray)](https://bintray.com/shadowcra/Solid/SolidActivity)
+[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidFragment?label=fragment+|+bintray)](https://bintray.com/shadowcra/Solid/SolidFragmeent)
+
+[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidRecyclerView?label=recyclerview+|+bintray)](https://bintray.com/shadowcra/Solid/SolidRecyclerView)
 
 [![Build Status](https://img.shields.io/travis/EranBoudjnah/Solid)](https://travis-ci.com/EranBoudjnah/Solid)
 [![License](https://img.shields.io/github/license/EranBoudjnah/Solid)](http://cocoapods.org/pods/MTCircularSlider)
@@ -29,6 +31,7 @@ And then the implementation.
 
 ```groovy
 dependencies {
+    implementation "com.mitteloupe.solid:solidapplication:1.0.5"
     implementation "com.mitteloupe.solid:solidactivity:1.0.5"
     implementation "com.mitteloupe.solid:solidfragment:1.0.4"
     implementation "com.mitteloupe.solid:solidrecyclerview:1.0.2"
@@ -37,6 +40,12 @@ dependencies {
 
 
 ## Usage
+
+### Application
+
+Make your app Application instance extend `SolidApplication`. To implement functionality, simply override
+`lifecycleHandlers`, `configurationChangeHandlers` or `memoryHandlers`, providing relevant handlers.
+
 
 ### Activity
 

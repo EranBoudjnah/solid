@@ -29,7 +29,7 @@ And then the implementation.
 
 ```groovy
 dependencies {
-    implementation "com.mitteloupe.solid:solidactivity:1.0.4"
+    implementation "com.mitteloupe.solid:solidactivity:1.0.5"
     implementation "com.mitteloupe.solid:solidfragment:1.0.4"
     implementation "com.mitteloupe.solid:solidrecyclerview:1.0.2"
 }

@@ -95,7 +95,7 @@ class SolidActivityTest {
     }
 
     @Test
-    fun `Given lifecycle handlers and bundle when activity created then onCreate called`() {
+    fun `Given lifecycle handlers and bundle when activity created then onPreCreate and onCreate called in order`() {
         // Given
         val lifecycleHandler1: LifecycleHandler = mock()
         val lifecycleHandler2: LifecycleHandler = mock()
@@ -111,9 +111,18 @@ class SolidActivityTest {
         cutController.create(bundle)
 
         // Then
-        verify(lifecycleHandler1).onCreate(bundle)
-        verify(lifecycleHandler2).onCreate(bundle)
-        verify(lifecycleHandler3).onCreate(bundle)
+        inOrder(lifecycleHandler1) {
+            verify(lifecycleHandler1).onPreCreate(bundle)
+            verify(lifecycleHandler1).onCreate(bundle)
+        }
+        inOrder(lifecycleHandler2) {
+            verify(lifecycleHandler2).onPreCreate(bundle)
+            verify(lifecycleHandler2).onCreate(bundle)
+        }
+        inOrder(lifecycleHandler3) {
+            verify(lifecycleHandler3).onPreCreate(bundle)
+            verify(lifecycleHandler3).onCreate(bundle)
+        }
     }
 
     @Test

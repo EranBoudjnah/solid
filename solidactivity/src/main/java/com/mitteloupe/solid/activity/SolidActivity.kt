@@ -96,6 +96,10 @@ abstract class SolidActivity : AppCompatActivity() {
     // region Lifecycle event functions
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        lifecycleHandlers.forEach { handler ->
+            handler.onPreCreate(savedInstanceState)
+        }
+
         super.onCreate(savedInstanceState)
 
         lifecycleHandlers.forEach { handler ->
@@ -112,6 +116,10 @@ abstract class SolidActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        lifecycleHandlers.forEach { handler ->
+            handler.onPreCreate(savedInstanceState, persistentState)
+        }
+
         super.onCreate(savedInstanceState, persistentState)
 
         lifecycleHandlers.forEach { handler ->

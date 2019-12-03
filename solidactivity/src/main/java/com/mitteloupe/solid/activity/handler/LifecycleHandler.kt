@@ -6,6 +6,13 @@ import android.os.PersistableBundle
 
 interface LifecycleHandler {
     /**
+     * Gets called when [onCreate] gets called before the call to super is made.
+     *
+     * @see Activity.onCreate
+     */
+    fun onPreCreate(savedInstanceState: Bundle?) = Unit
+
+    /**
      * @see Activity.onCreate
      */
     fun onCreate(savedInstanceState: Bundle?) = Unit
@@ -14,6 +21,13 @@ interface LifecycleHandler {
      * @see Activity.onPostCreate
      */
     fun onPostCreate(savedInstanceState: Bundle?) = Unit
+
+    /**
+     * Gets called when [onCreate] gets called before the call to super is made.
+     *
+     * @see Activity.onCreate
+     */
+    fun onPreCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) = Unit
 
     /**
      * @see Activity.onCreate

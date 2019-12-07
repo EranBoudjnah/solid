@@ -8,8 +8,8 @@
 
 [![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidRecyclerView?label=recyclerview+|+bintray)](https://bintray.com/shadowcra/Solid/SolidRecyclerView)
 
-[![Build Status](https://img.shields.io/travis/EranBoudjnah/Solid)](https://travis-ci.com/EranBoudjnah/Solid)
-[![License](https://img.shields.io/github/license/EranBoudjnah/Solid)](http://cocoapods.org/pods/MTCircularSlider)
+[![Build Status](https://img.shields.io/travis/EranBoudjnah/Solid)](https://travis-ci.com/EranBoudjnah/solid)
+[![License](https://img.shields.io/github/license/EranBoudjnah/Solid)](https://github.com/EranBoudjnah/solid/blob/master/LICENSE)
 [![Platform](https://img.shields.io/badge/platform-android-lightgrey)](https://developer.android.com/reference)
 
 SOLID Components are an attempt at following good engineering standards and best practices such as [SOLID](https://en.wikipedia.org/wiki/SOLID) and [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) where Google neglected to.

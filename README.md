@@ -1,12 +1,12 @@
 # SOLID Components
 
-[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidApplication?label=application+|+bintray)](https://bintray.com/shadowcra/Solid/SolidApplication)
+[![Version - Application](https://img.shields.io/bintray/v/shadowcra/Solid/SolidApplication?label=application+|+bintray)](https://bintray.com/shadowcra/Solid/SolidApplication)
 
-[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidActivity?label=activity+|+bintray)](https://bintray.com/shadowcra/Solid/SolidActivity)
-[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidFragment?label=fragment+|+bintray)](https://bintray.com/shadowcra/Solid/SolidFragment)
-[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidService?label=service+|+bintray)](https://bintray.com/shadowcra/Solid/SolidService)
+[![Version - Activity](https://img.shields.io/bintray/v/shadowcra/Solid/SolidActivity?label=activity+|+bintray)](https://bintray.com/shadowcra/Solid/SolidActivity)
+[![Version - Fragment](https://img.shields.io/bintray/v/shadowcra/Solid/SolidFragment?label=fragment+|+bintray)](https://bintray.com/shadowcra/Solid/SolidFragment)
+[![Version - Service](https://img.shields.io/bintray/v/shadowcra/Solid/SolidService?label=service+|+bintray)](https://bintray.com/shadowcra/Solid/SolidService)
 
-[![Version](https://img.shields.io/bintray/v/shadowcra/Solid/SolidRecyclerView?label=recyclerview+|+bintray)](https://bintray.com/shadowcra/Solid/SolidRecyclerView)
+[![Version - RecyclerView](https://img.shields.io/bintray/v/shadowcra/Solid/SolidRecyclerView?label=recyclerview+|+bintray)](https://bintray.com/shadowcra/Solid/SolidRecyclerView)
 
 [![Build Status](https://img.shields.io/travis/EranBoudjnah/Solid)](https://travis-ci.com/EranBoudjnah/solid)
 [![License](https://img.shields.io/github/license/EranBoudjnah/Solid)](https://github.com/EranBoudjnah/solid/blob/master/LICENSE)

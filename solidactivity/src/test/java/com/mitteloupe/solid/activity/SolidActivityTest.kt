@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.ActionMode
@@ -64,8 +65,10 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
+@Config(sdk = [Build.VERSION_CODES.P])
 class SolidActivityTest {
     private lateinit var cutController: ActivityController<TestActivity>
 
@@ -1657,32 +1660,6 @@ class SolidActivityTest {
         verify(optionsMenuHandler1).onOptionsMenuClosed(menu)
         verify(optionsMenuHandler2).onOptionsMenuClosed(menu)
         verify(optionsMenuHandler3).onOptionsMenuClosed(menu)
-    }
-
-    @Test
-    fun `Given menu opened handlers when onMenuOpened then delegates to handlers until intercepted`() {
-        // Given
-        val featureId = 321
-        val menuOpenedHandler1: MenuOpenedHandler = mock {
-            on { onMenuOpening(featureId) }.thenReturn(true)
-        }
-
-        val menuOpenedHandler2: MenuOpenedHandler = mock()
-        val menuOpenedHandler3: MenuOpenedHandler = mock()
-
-        val activity = cutController.get()
-        activity.testMenuOpenedHandlers.addAll(
-            listOf(menuOpenedHandler1, menuOpenedHandler2, menuOpenedHandler3)
-        )
-
-        // When
-        val actualValue = activity.onMenuOpened(featureId, null)
-
-        // Then
-        verify(menuOpenedHandler1).onMenuOpening(featureId)
-        verify(menuOpenedHandler2).onMenuOpening(featureId)
-        verify(menuOpenedHandler3, never()).onMenuOpening(featureId)
-        assertFalse(actualValue)
     }
 
     @Test

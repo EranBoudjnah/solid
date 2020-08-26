@@ -274,8 +274,8 @@ abstract class SolidActivity : AppCompatActivity() {
     }
 
     override fun onRestoreInstanceState(
-        savedInstanceState: Bundle,
-        persistentState: PersistableBundle
+        savedInstanceState: Bundle?,
+        persistentState: PersistableBundle?
     ) {
         instanceStateHandlers.forEach { handler ->
             handler.onRestoreInstanceState(savedInstanceState, persistentState)
@@ -547,15 +547,9 @@ abstract class SolidActivity : AppCompatActivity() {
 
     // region Menu Opened event function
 
-    override fun onMenuOpened(featureId: Int, menu: Menu?) =
-        if (menu == null) {
-            menuOpenedHandlers.all { handler ->
-                handler.onMenuOpening(featureId)
-            }
-        } else {
-            menuOpenedHandlers.all { handler ->
-                handler.onMenuOpened(featureId, menu)
-            }
+    override fun onMenuOpened(featureId: Int, menu: Menu) =
+        menuOpenedHandlers.all { handler ->
+            handler.onMenuOpened(featureId, menu)
         } && super.onMenuOpened(featureId, menu)
 
     // endregion Menu Opened event function

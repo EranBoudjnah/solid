@@ -1,6 +1,7 @@
 package com.mitteloupe.solid.application
 
 import android.content.res.Configuration
+import android.os.Build
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mitteloupe.solid.application.handler.ConfigurationChangeHandler
 import com.mitteloupe.solid.application.handler.LifecycleHandler
@@ -10,8 +11,10 @@ import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
+@Config(sdk = [Build.VERSION_CODES.P])
 class SolidApplicationTest {
     private lateinit var cut: TestApplication
 

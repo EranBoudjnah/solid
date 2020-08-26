@@ -2,6 +2,7 @@ package com.mitteloupe.solid.service
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.os.Build
 import android.os.IBinder
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mitteloupe.solid.service.handler.BindingHandler
@@ -18,8 +19,10 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
+@Config(sdk = [Build.VERSION_CODES.P])
 class SolidServiceTest {
     private lateinit var cut: TestService
 

@@ -24,7 +24,7 @@ interface InstanceStateHandler {
      * @see Activity.onRestoreInstanceState
      */
     fun onRestoreInstanceState(
-        savedInstanceState: Bundle,
-        persistentState: PersistableBundle
+        savedInstanceState: Bundle?,
+        persistentState: PersistableBundle?
     ) = Unit
 }

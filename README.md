@@ -38,7 +38,7 @@ dependencies {
     implementation "com.mitteloupe.solid:solidfragment:1.0.4"
     implementation "com.mitteloupe.solid:solidservice:1.0.5"
 
-    implementation "com.mitteloupe.solid:solidrecyclerview:1.0.2"
+    implementation "com.mitteloupe.solid:solidrecyclerview:1.0.3"
 }
 ```
 

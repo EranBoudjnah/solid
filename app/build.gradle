@@ -5,11 +5,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.mitteloupe.solidcomponents"
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -48,7 +48,7 @@ dependencies {
     implementation "com.mitteloupe.solid:solidfragment:1.0.4"
     implementation project(path: ':solidservice')
 
-    implementation "com.mitteloupe.solid:solidrecyclerview:1.0.2"
+    implementation "com.mitteloupe.solid:solidrecyclerview:1.0.3"
 
     implementation 'org.koin:koin-android:2.1.6'
     implementation 'org.koin:koin-android-scope:2.1.6'

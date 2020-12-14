@@ -917,7 +917,8 @@ class SolidActivityTest {
                 activity,
                 ActivityInfo().apply {
                     parentActivityName = "com.mitteloupe.solid.activity.TestActivity"
-                })
+                }
+            )
         }
 
         // When
@@ -949,7 +950,8 @@ class SolidActivityTest {
                 activity,
                 ActivityInfo().apply {
                     parentActivityName = "com.mitteloupe.solid.activity.TestActivity"
-                })
+                }
+            )
         }
 
         // When
@@ -1011,7 +1013,8 @@ class SolidActivityTest {
                 activity,
                 ActivityInfo().apply {
                     parentActivityName = "com.mitteloupe.solid.activity.TestActivity"
-                })
+                }
+            )
         }
 
         // When
@@ -1043,7 +1046,8 @@ class SolidActivityTest {
                 activity,
                 ActivityInfo().apply {
                     parentActivityName = "com.mitteloupe.solid.activity.TestActivity"
-                })
+                }
+            )
         }
 
         val childActivity = mock<Activity>()

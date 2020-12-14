@@ -10,8 +10,8 @@ import com.mitteloupe.solid.recyclerview.SolidAdapter
 import com.mitteloupe.solidcomponents.adapter.MoodViewHolder
 import com.mitteloupe.solidcomponents.hander.KoinFragmentScopeHandler
 import com.mitteloupe.solidcomponents.model.MoodUiModel
-import kotlinx.android.synthetic.main.fragment_main.recycler_view as recyclerView
 import org.koin.android.scope.currentScope
+import kotlinx.android.synthetic.main.fragment_main.recycler_view as recyclerView
 
 class MainFragment : SolidFragment() {
     private val solidAdapter: SolidAdapter<MoodViewHolder, MoodUiModel> by currentScope.inject()

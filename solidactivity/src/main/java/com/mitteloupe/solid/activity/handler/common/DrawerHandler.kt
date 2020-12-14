@@ -40,7 +40,11 @@ class DrawerHandler(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val toggle = ActionBarDrawerToggle(
-            activity, drawerLayout, toolbar, openDrawerResourceId, closeDrawerResourceId
+            activity,
+            drawerLayout,
+            toolbar,
+            openDrawerResourceId,
+            closeDrawerResourceId
         )
 
         drawerLayout.addDrawerListener(toggle)

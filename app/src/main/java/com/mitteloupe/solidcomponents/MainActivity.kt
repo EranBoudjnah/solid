@@ -9,16 +9,19 @@ import com.mitteloupe.solid.activity.handler.common.ToolbarHandler
 import com.mitteloupe.solid.fragment.SolidFragmentFactory
 import com.mitteloupe.solidcomponents.hander.KoinActivityScopeHandler
 import com.mitteloupe.solidcomponents.hander.ResponseReceiverHandler
-import kotlinx.android.synthetic.main.activity_main.main_drawer_layout as drawerLayout
-import kotlinx.android.synthetic.main.activity_main.main_navigation_view as navigationView
 import kotlinx.android.synthetic.main.include_toolbar.toolbar
 import org.koin.android.scope.currentScope
+import kotlinx.android.synthetic.main.activity_main.main_drawer_layout as drawerLayout
+import kotlinx.android.synthetic.main.activity_main.main_navigation_view as navigationView
 
 class MainActivity : SolidActivity() {
     private val fragmentFactory: SolidFragmentFactory by currentScope.inject()
 
     private val drawerHandler = DrawerHandler(
-        this, lazy { drawerLayout }, lazy { toolbar }, lazy { navigationView },
+        this,
+        lazy { drawerLayout },
+        lazy { toolbar },
+        lazy { navigationView },
         MainDrawerItemSelectedListener(this)
     )
 
@@ -42,7 +45,9 @@ class MainActivity : SolidActivity() {
 
     override val optionsMenuHandlers = listOf(
         SimpleOptionsMenuHandler(
-            lazy { menuInflater }, R.menu.main_options, MainOptionsMenuListener(this)
+            lazy { menuInflater },
+            R.menu.main_options,
+            MainOptionsMenuListener(this)
         )
     )
 }

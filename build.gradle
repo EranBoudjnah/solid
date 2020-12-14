@@ -12,7 +12,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:9.2.1"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:9.4.1"
         classpath "com.github.ben-manes:gradle-versions-plugin:0.36.0"
     }
 }
@@ -21,11 +21,22 @@ allprojects {
     repositories {
         google()
         jcenter()
-
     }
 }
 
-task clean(type: Delete) {
+configurations.all {
+    resolutionStrategy.eachDependency { details ->
+        def requested = details.requested
+        if (requested.group == 'org.jetbrains.kotlin' && requested.name == 'kotlin-reflect') {
+            details.useVersion kotlin_version
+        }
+        if (requested.group == 'com.pinterest' && requested.name == 'ktlint') {
+            details.useVersion '0.40.0'
+        }
+    }
+}
+
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
 

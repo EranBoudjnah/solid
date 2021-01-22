@@ -50,8 +50,8 @@ dependencies {
     testImplementation 'androidx.test.ext:junit-ktx:1.1.2'
     testImplementation 'androidx.fragment:fragment-testing:1.2.5'
 
-    testImplementation 'org.mockito:mockito-core:3.6.28'
-    testImplementation 'org.mockito:mockito-inline:3.6.28'
+    testImplementation 'org.mockito:mockito-core:3.7.7'
+    testImplementation 'org.mockito:mockito-inline:3.7.7'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
 
     testImplementation 'org.hamcrest:hamcrest:2.2'

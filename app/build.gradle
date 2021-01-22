@@ -53,5 +53,5 @@ dependencies {
     implementation 'org.koin:koin-android:2.1.6'
     implementation 'org.koin:koin-android-scope:2.1.6'
 
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
 }

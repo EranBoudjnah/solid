@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -39,7 +39,7 @@ dependencies {
 ext {
     set("PUBLISH_GROUP_ID", "com.mitteloupe.solid")
     set("PUBLISH_ARTIFACT_ID", "solidrecyclerview")
-    set("PUBLISH_VERSION", "1.0.3")
+    set("PUBLISH_VERSION", "1.0.4")
 }
 
 apply {

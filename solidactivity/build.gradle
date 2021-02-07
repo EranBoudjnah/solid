@@ -45,7 +45,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
     // Required for DrawerHandler
-    compileOnly 'com.google.android.material:material:1.2.1'
+    compileOnly 'com.google.android.material:material:1.3.0'
 
     // Required for FragmentHandler
     compileOnly 'androidx.fragment:fragment-ktx:1.2.5'
@@ -62,7 +62,7 @@ dependencies {
 
     testImplementation 'org.hamcrest:hamcrest:2.2'
 
-    testImplementation('org.robolectric:robolectric:4.4') {
+    testImplementation('org.robolectric:robolectric:4.5.1') {
         exclude group: 'org.apache.maven', module: 'maven-artifact'
         exclude group: 'org.apache.maven', module: 'maven-artifact-manager'
         exclude group: 'org.apache.maven', module: 'maven-model'

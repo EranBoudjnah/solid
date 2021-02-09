@@ -18,13 +18,11 @@ SOLID Components are an attempt at following good engineering standards and best
 
 ## Installation
 
-Add the maven repository to your `build.gradle` file.
+Add the jcenter maven repository to your `build.gradle` file if it's not there already.
 
 ```groovy
 repositories {
-    maven {
-        url "https://dl.bintray.com/shadowcra/Solid"
-    }
+    jcenter()
 }
 ```
 

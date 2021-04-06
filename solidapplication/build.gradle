@@ -73,7 +73,7 @@ dependencies {
 ext {
     set("PUBLISH_GROUP_ID", "com.mitteloupe.solid")
     set("PUBLISH_ARTIFACT_ID", "solidapplication")
-    set("PUBLISH_VERSION", "1.0.7")
+    set("PUBLISH_VERSION", "1.0.8")
 }
 
 apply {

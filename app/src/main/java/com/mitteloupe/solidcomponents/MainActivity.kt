@@ -1,5 +1,8 @@
 package com.mitteloupe.solidcomponents
 
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.mitteloupe.solid.activity.SolidActivity
 import com.mitteloupe.solid.activity.handler.common.DrawerHandler
 import com.mitteloupe.solid.activity.handler.common.FragmentHandler
@@ -9,12 +12,13 @@ import com.mitteloupe.solid.activity.handler.common.ToolbarHandler
 import com.mitteloupe.solid.fragment.SolidFragmentFactory
 import com.mitteloupe.solidcomponents.hander.KoinActivityScopeHandler
 import com.mitteloupe.solidcomponents.hander.ResponseReceiverHandler
-import kotlinx.android.synthetic.main.include_toolbar.toolbar
 import org.koin.android.scope.currentScope
-import kotlinx.android.synthetic.main.activity_main.main_drawer_layout as drawerLayout
-import kotlinx.android.synthetic.main.activity_main.main_navigation_view as navigationView
 
 class MainActivity : SolidActivity() {
+    private val toolbar: Toolbar by lazy { findViewById(R.id.toolbar) }
+    private val drawerLayout: DrawerLayout by lazy { findViewById(R.id.main_drawer_layout) }
+    private val navigationView: NavigationView by lazy { findViewById(R.id.main_navigation_view) }
+
     private val fragmentFactory: SolidFragmentFactory by currentScope.inject()
 
     private val drawerHandler = DrawerHandler(

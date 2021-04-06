@@ -12,8 +12,6 @@ import com.mitteloupe.solid.recyclerview.SimpleViewBinder
 import com.mitteloupe.solidcomponents.R
 import com.mitteloupe.solidcomponents.model.MoodUiModel
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_mood.mood_icon as layoutIconView
-import kotlinx.android.synthetic.main.item_mood.mood_title as layoutTitleView
 
 class MoodViewProvider(
     layoutInflater: LayoutInflater
@@ -22,8 +20,13 @@ class MoodViewProvider(
 class MoodViewHolder(
     override val containerView: View
 ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-    val iconView: ImageView = layoutIconView
-    val titleView: TextView = layoutTitleView
+    private val layoutIconView: ImageView by lazy { containerView.findViewById(R.id.recycler_view) }
+    private val layoutTitleView: TextView by lazy { containerView.findViewById(R.id.recycler_view) }
+
+    val iconView: ImageView
+        get() = layoutIconView
+    val titleView: TextView
+        get() = layoutTitleView
 }
 
 class MoodViewBinder(

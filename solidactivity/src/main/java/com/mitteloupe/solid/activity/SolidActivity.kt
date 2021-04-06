@@ -383,6 +383,7 @@ abstract class SolidActivity : AppCompatActivity() {
             handler.onNavigateUp()
         } || super.onNavigateUp()
 
+    @Deprecated(message = "Use #onNavigateUp() instead.")
     override fun onNavigateUpFromChild(child: Activity) =
         navigationHandlers.any { handler ->
             handler.onNavigateUpFromChild(child)

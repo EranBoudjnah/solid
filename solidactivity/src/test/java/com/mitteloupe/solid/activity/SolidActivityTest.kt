@@ -23,6 +23,7 @@ import android.view.SearchEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
+import androidx.core.os.bundleOf
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mitteloupe.solid.activity.handler.ActionModeHandler
 import com.mitteloupe.solid.activity.handler.ActivityForResultCallbackHandler
@@ -53,11 +54,11 @@ import com.nhaarman.mockitokotlin2.inOrder
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.ArrayMatching.arrayContaining
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
-import org.junit.Assert.assertThat
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -108,7 +109,7 @@ class SolidActivityTest {
             listOf(lifecycleHandler1, lifecycleHandler2, lifecycleHandler3)
         )
 
-        val bundle = mock<Bundle>()
+        val bundle = bundleOf()
 
         // When
         cutController.create(bundle)
@@ -980,7 +981,7 @@ class SolidActivityTest {
         val childActivity = mock<Activity>()
 
         // When
-        val actualValue = activity.onNavigateUpFromChild(childActivity)
+        @Suppress("DEPRECATION") val actualValue = activity.onNavigateUpFromChild(childActivity)
 
         // Then
         verify(navigationHandler1).onNavigateUpFromChild(childActivity)
@@ -1018,7 +1019,7 @@ class SolidActivityTest {
         }
 
         // When
-        val actualValue = activity.onNavigateUpFromChild(childActivity)
+        @Suppress("DEPRECATION") val actualValue = activity.onNavigateUpFromChild(childActivity)
 
         // Then
         verify(navigationHandler1).onNavigateUpFromChild(childActivity)
@@ -1053,7 +1054,7 @@ class SolidActivityTest {
         val childActivity = mock<Activity>()
 
         // When
-        val actualValue = activity.onNavigateUpFromChild(childActivity)
+        @Suppress("DEPRECATION") val actualValue = activity.onNavigateUpFromChild(childActivity)
 
         // Then
         verify(navigationHandler1).onNavigateUpFromChild(childActivity)

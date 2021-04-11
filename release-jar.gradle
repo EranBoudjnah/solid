@@ -1,48 +1,98 @@
 apply plugin: 'maven'
+//apply plugin: 'signing'
 
-def groupId = project.PUBLISH_GROUP_ID
-def artifactId = project.PUBLISH_ARTIFACT_ID
-def version = project.PUBLISH_VERSION
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.kotlin.srcDirs
+    archiveClassifier = "sources"
+}
 
-def localReleaseDest = "${buildDir}/release/${version}"
+artifacts {
+    archives sourcesJar
+}
+
+//signing {
+//    sign configurations.archives
+//}
+
+def gitUrl = 'https://github.com/EranBoudjnah/solid.git'
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file("local.properties").newDataInputStream())
+def pomVersion = project.PUBLISH_VERSION
+def localReleaseDest = "${buildDir}/release/${pomVersion}"
+def ossrhUsername = properties['ossrhUsername']
+def ossrhPassword = properties['ossrhPassword']
+
+println "packageGroup = " + project.PUBLISH_GROUP_ID
+
+nexusStaging {
+    username = "${ossrhUsername}"
+    password = "${ossrhPassword}"
+    packageGroup = project.PUBLISH_GROUP_ID
+}
 
 uploadArchives {
-	repositories.mavenDeployer {
-		pom.groupId = groupId
-		pom.artifactId = artifactId
-		pom.version = version
+    repositories.mavenDeployer {
+//        beforeDeployment {
+//            deployment -> signing.signPom(deployment)
+//        }
 
-		repository(url: "file://${localReleaseDest}")
-	}
+        pom {
+            project {
+                name project.PUBLISH_ARTIFACT_ID
+                description 'An attempt at following good engineering standards and best practices such as SOLID and DRY where Google neglected to.'
+                packaging 'jar'
+                url gitUrl
+                licenses {
+                    license {
+                        name 'MIT'
+                        url 'https://github.com/EranBoudjnah/solid/blob/master/LICENSE'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url gitUrl
+                }
+                developers {
+                    developer {
+                        id "EranBoudjnah"
+                        name "Eran Boudjnah"
+                        email "eranbou+solid@gmail.com"
+                    }
+                }
+            }
+            groupId = project.PUBLISH_GROUP_ID
+            artifactId = project.PUBLISH_ARTIFACT_ID
+            version = pomVersion
+        }
+
+        repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+            authentication(userName: ossrhUsername, password: ossrhPassword)
+        }
+        snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+            authentication(userName: ossrhUsername, password: ossrhPassword)
+        }
+
+        repository(url: "file://${localReleaseDest}")
+
+
+    }
 }
 
 task zipRelease(type: Zip) {
-	from localReleaseDest
-	setDestinationDirectory buildDir
-	setArchiveFileName "release-${version}.zip"
+    from localReleaseDest
+    setDestinationDirectory buildDir
+    setArchiveFileName "release-${pomVersion}.zip"
 }
 
 task generateRelease {
-	doLast {
-		println "Release ${version} can be found at ${localReleaseDest}/"
-		println "Release ${version} zipped can be found ${buildDir}/release-${version}.zip"
-	}
-}
-
-task sourcesJar(type: Jar) {
-	from android.sourceSets.main.kotlin.srcDirs
-	archiveClassifier = "sources"
-}
-//task sourcesJar(type: Jar, dependsOn: classes) {
-//	classifier = 'sources'
-//	from sourceSets.main.allSource
-//}
-
-artifacts {
-	archives sourcesJar
+    doLast {
+        println "Release ${pomVersion} can be found at ${localReleaseDest}/"
+        println "Release ${pomVersion} zipped can be found ${buildDir}/release-${pomVersion}.zip"
+    }
 }
 
 generateRelease
-	.dependsOn(uploadArchives)
-	.dependsOn(zipRelease)
-    .dependsOn(sourcesJar)
+    .dependsOn(uploadArchives)
+    .dependsOn(zipRelease)

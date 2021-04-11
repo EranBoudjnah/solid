@@ -78,13 +78,6 @@ dependencies {
     }
 }
 
-//resolutionStrategy.eachDependency { details ->
-//    def requested = details.requested
-//    if (requested.group == 'androidx.appcompat:appcompat') {
-//        details.useVersion '1.2.2'
-//    }
-//}
-
 ext {
     set("PUBLISH_GROUP_ID", "com.mitteloupe.solid")
     set("PUBLISH_ARTIFACT_ID", "solidactivity")

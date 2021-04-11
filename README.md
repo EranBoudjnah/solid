@@ -1,12 +1,12 @@
 # SOLID Components
 
-[![Version - Application](https://img.shields.io/bintray/v/shadowcra/Solid/SolidApplication?label=application+|+bintray)](https://bintray.com/shadowcra/Solid/SolidApplication)
+[![Version - Application](https://img.shields.io/maven-central/v/com.mitteloupe.solid/solidapplication?label=application+|+MavenCentral)](https://mvnrepository.com/artifact/com.mitteloupe.solid/solidapplication)
 
-[![Version - Activity](https://img.shields.io/bintray/v/shadowcra/Solid/SolidActivity?label=activity+|+bintray)](https://bintray.com/shadowcra/Solid/SolidActivity)
-[![Version - Fragment](https://img.shields.io/bintray/v/shadowcra/Solid/SolidFragment?label=fragment+|+bintray)](https://bintray.com/shadowcra/Solid/SolidFragment)
-[![Version - Service](https://img.shields.io/bintray/v/shadowcra/Solid/SolidService?label=service+|+bintray)](https://bintray.com/shadowcra/Solid/SolidService)
+[![Version - Activity](https://img.shields.io/maven-central/v/com.mitteloupe.solid/solidactivity?label=activity+|+MavenCentral)](https://mvnrepository.com/artifact/com.mitteloupe.solid/solidactivity)
+[![Version - Fragment](https://img.shields.io/maven-central/v/com.mitteloupe.solid/solidfragment?label=fragment+|+MavenCentral)](https://mvnrepository.com/artifact/com.mitteloupe.solid/solidfragment)
+[![Version - Service](https://img.shields.io/maven-central/v/com.mitteloupe.solid/solidservice?label=service+|+MavenCentral)](https://mvnrepository.com/artifact/com.mitteloupe.solid/solidservice)
 
-[![Version - RecyclerView](https://img.shields.io/bintray/v/shadowcra/Solid/SolidRecyclerView?label=recyclerview+|+bintray)](https://bintray.com/shadowcra/Solid/SolidRecyclerView)
+[![Version - RecyclerView](https://img.shields.io/central/v/com.mitteloupe.solid/solidrecyclerview?label=recyclerview+|+bintray)](https://mvnrepository.com/artifact/com.mitteloupe.solid/solidrecyclerview)
 
 [![Build Status](https://img.shields.io/travis/EranBoudjnah/Solid)](https://travis-ci.com/EranBoudjnah/solid)
 [![License](https://img.shields.io/github/license/EranBoudjnah/Solid)](https://github.com/EranBoudjnah/solid/blob/master/LICENSE)
@@ -18,15 +18,7 @@ SOLID Components are an attempt at following good engineering standards and best
 
 ## Installation
 
-Add the jcenter maven repository to your `build.gradle` file if it's not there already.
-
-```groovy
-repositories {
-    jcenter()
-}
-```
-
-And then the implementation.
+And the implementation dependencies below. You can add just the components you need.
 
 ```groovy
 dependencies {

@@ -6,7 +6,7 @@
 [![Version - Fragment](https://img.shields.io/maven-central/v/com.mitteloupe.solid/solidfragment?label=fragment+|+MavenCentral)](https://mvnrepository.com/artifact/com.mitteloupe.solid/solidfragment)
 [![Version - Service](https://img.shields.io/maven-central/v/com.mitteloupe.solid/solidservice?label=service+|+MavenCentral)](https://mvnrepository.com/artifact/com.mitteloupe.solid/solidservice)
 
-[![Version - RecyclerView](https://img.shields.io/central/v/com.mitteloupe.solid/solidrecyclerview?label=recyclerview+|+bintray)](https://mvnrepository.com/artifact/com.mitteloupe.solid/solidrecyclerview)
+[![Version - RecyclerView](https://img.shields.io/maven-central/v/com.mitteloupe.solid/solidrecyclerview?label=recyclerview+|+bintray)](https://mvnrepository.com/artifact/com.mitteloupe.solid/solidrecyclerview)
 
 [![Build Status](https://img.shields.io/travis/EranBoudjnah/Solid)](https://travis-ci.com/EranBoudjnah/solid)
 [![License](https://img.shields.io/github/license/EranBoudjnah/Solid)](https://github.com/EranBoudjnah/solid/blob/master/LICENSE)

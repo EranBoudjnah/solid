@@ -22,13 +22,13 @@ And the implementation dependencies below. You can add just the components you n
 
 ```groovy
 dependencies {
-    implementation "com.mitteloupe.solid:solidapplication:1.0.6"
+    implementation "com.mitteloupe.solid:solidapplication:1.0.8"
 
-    implementation "com.mitteloupe.solid:solidactivity:1.0.6"
-    implementation "com.mitteloupe.solid:solidfragment:1.0.5"
-    implementation "com.mitteloupe.solid:solidservice:1.0.6"
+    implementation "com.mitteloupe.solid:solidactivity:1.0.8"
+    implementation "com.mitteloupe.solid:solidfragment:1.0.7"
+    implementation "com.mitteloupe.solid:solidservice:1.0.8"
 
-    implementation "com.mitteloupe.solid:solidrecyclerview:1.0.3"
+    implementation "com.mitteloupe.solid:solidrecyclerview:1.0.5"
 }
 ```
 

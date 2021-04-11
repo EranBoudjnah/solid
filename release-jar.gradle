@@ -17,7 +17,10 @@ artifacts {
 def gitUrl = 'https://github.com/EranBoudjnah/solid.git'
 
 Properties properties = new Properties()
-properties.load(project.rootProject.file("local.properties").newDataInputStream())
+File propertiesFile = project.rootProject.file("local.properties")
+if (propertiesFile.exists()) {
+    properties.load(propertiesFile.newDataInputStream())
+}
 def pomVersion = project.PUBLISH_VERSION
 def localReleaseDest = "${buildDir}/release/${pomVersion}"
 def ossrhUsername = properties['ossrhUsername']

@@ -78,8 +78,6 @@ uploadArchives {
         }
 
         repository(url: "file://${localReleaseDest}")
-
-
     }
 }
 
@@ -97,5 +95,5 @@ task generateRelease {
 }
 
 generateRelease
-    .dependsOn(uploadArchives)
-    .dependsOn(zipRelease)
+        .dependsOn(uploadArchives)
+        .dependsOn(zipRelease)
